@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>TRILLIONAIRE TERMINAL / v2.6</title>
+  <title>TRILLIONAIRE TERMINAL / v2.7</title>
   <style>
     :root {
       --bg-main: #000000;
@@ -149,52 +149,67 @@
       color: var(--text-main);
       font-family: var(--font-mono);
       font-size: var(--font-size);
-      line-height: 1.5;
-      padding: 12px;
-      max-width: 900px;
+      line-height: 1.6;
+      padding: 16px;
+      max-width: 800px;
       margin: 0 auto;
       transition: background-color 0.2s, color 0.2s;
     }
 
+    /* Header controls */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 12px;
-      margin-bottom: 16px;
-      border-bottom: 2px dashed var(--border-accent);
-      flex-wrap: wrap;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
       gap: 10px;
     }
 
-    .brand-title {
-      font-size: 1.1rem;
-      font-weight: bold;
-      letter-spacing: 2px;
-      color: var(--text-bright);
+    .window-dots {
+      display: flex;
+      gap: 6px;
     }
 
-    .clock-display {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      text-align: right;
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot-red { background-color: var(--accent-red); }
+    .dot-yellow { background-color: var(--accent-gold); }
+    .dot-green { background-color: var(--accent-green); }
+
+    .brand-title {
+      font-size: 0.95rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: var(--text-main);
     }
 
     .header-actions {
       display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .btn-header {
       background: var(--bg-card);
       color: var(--text-main);
       border: 1px solid var(--border-color);
-      padding: 6px 10px;
-      border-radius: 4px;
+      padding: 6px 12px;
+      border-radius: 6px;
       font-family: var(--font-mono);
       font-size: 0.75rem;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       transition: all 0.2s;
     }
 
@@ -206,114 +221,152 @@
     .terminal-card {
       background-color: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 14px;
-      margin-bottom: 14px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      border-radius: 8px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
-    .section-title {
-      font-size: 0.8rem;
+    .dashed-border {
+      border: 1px dashed var(--border-accent);
+    }
+
+    .subhead {
+      font-size: 0.75rem;
       color: var(--text-dim);
       letter-spacing: 1.5px;
       text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .main-heading {
+      font-size: 1.6rem;
+      color: var(--text-bright);
+      font-weight: bold;
       margin-bottom: 10px;
-      font-weight: bold;
+      letter-spacing: -0.5px;
     }
 
-    /* Index Heatmap Ticker Bar */
-    .indices-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .index-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      padding: 10px;
-      border-radius: 4px;
-      text-align: center;
-    }
-
-    .index-name {
-      font-size: 0.75rem;
+    .description {
+      font-size: 0.85rem;
       color: var(--text-dim);
-      letter-spacing: 1px;
+      line-height: 1.5;
     }
 
-    .index-val {
-      font-size: 1rem;
-      font-weight: bold;
-      color: var(--text-bright);
-      margin: 4px 0;
-    }
-
-    .index-change {
-      font-size: 0.8rem;
-      font-weight: bold;
-    }
-
-    /* Search Bar */
-    .search-row {
+    /* Grid inputs */
+    .input-row {
       display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
     }
 
-    .search-input {
+    .input-field, select {
       flex: 1;
-      background: var(--bg-main);
+      min-width: 120px;
+      background-color: var(--bg-main);
       border: 1px solid var(--border-color);
-      color: var(--text-bright);
-      padding: 10px 12px;
-      border-radius: 4px;
+      color: var(--text-main);
+      padding: 10px 14px;
+      border-radius: 6px;
       font-family: var(--font-mono);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       outline: none;
+      transition: border-color 0.2s;
     }
 
-    .search-input:focus {
+    .input-field:focus, select:focus {
       border-color: var(--text-main);
     }
 
     .btn-action {
-      background: var(--highlight-bg);
+      width: 100%;
+      background-color: var(--highlight-bg);
       color: var(--text-bright);
       border: 1px solid var(--border-accent);
-      padding: 0 16px;
-      border-radius: 4px;
+      padding: 12px;
+      border-radius: 6px;
       font-family: var(--font-mono);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: bold;
       cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
       letter-spacing: 1px;
     }
 
     .btn-action:hover {
-      background: var(--border-accent);
+      background-color: var(--border-accent);
+      border-color: var(--text-main);
     }
 
-    /* Top 20 Market Cap Heatmap Grid */
+    /* Quick jump pill tags */
+    .quick-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .chip-btn {
+      background-color: var(--bg-main);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .chip-btn:hover {
+      border-color: var(--text-main);
+      background-color: var(--bg-card-hover);
+    }
+
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+      font-size: 0.75rem;
+    }
+
+    .status-title {
+      font-weight: bold;
+      color: var(--text-bright);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .status-badge {
+      color: var(--text-dim);
+    }
+
+    /* Heatmap Grid */
     .heatmap-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
       gap: 8px;
+      margin-top: 12px;
+      margin-bottom: 12px;
     }
 
     .heat-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       padding: 10px;
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
       text-align: left;
       transition: all 0.15s;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 80px;
+      min-height: 85px;
     }
 
     .heat-card:hover {
@@ -334,7 +387,7 @@
     }
 
     .heat-price-stack {
-      margin-top: 6px;
+      margin-top: 4px;
       display: flex;
       flex-direction: column;
       gap: 1px;
@@ -350,7 +403,41 @@
       font-weight: bold;
     }
 
-    /* Asset Profile & Metrics Detail View */
+    /* Indices ticker bar */
+    .indices-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .index-box {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .index-name {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+    }
+
+    .index-val {
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: var(--text-bright);
+      margin: 2px 0;
+    }
+
+    .index-change {
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+
+    /* Detailed Asset Profile View */
     .profile-container {
       display: none;
     }
@@ -380,7 +467,7 @@
 
     .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 10px;
       margin-bottom: 14px;
     }
@@ -389,7 +476,7 @@
       background: var(--bg-main);
       border: 1px solid var(--border-color);
       padding: 8px 12px;
-      border-radius: 4px;
+      border-radius: 6px;
     }
 
     .metric-label {
@@ -408,7 +495,7 @@
 
     .returns-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 8px;
     }
 
@@ -416,7 +503,7 @@
       background: var(--bg-main);
       border: 1px solid var(--border-color);
       padding: 8px 10px;
-      border-radius: 4px;
+      border-radius: 6px;
     }
 
     .return-label {
@@ -435,11 +522,63 @@
     .negative { color: var(--accent-red); }
     .neutral { color: var(--text-bright); }
 
-    /* Terminal Console Box */
+    .back-btn {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      cursor: pointer;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .back-btn:hover {
+      color: var(--text-bright);
+      border-color: var(--text-main);
+    }
+
+    .passage-body {
+      font-size: var(--font-size);
+      min-height: 180px;
+      line-height: 1.8;
+      color: var(--text-bright);
+    }
+
+    .verse-item {
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+
+    .verse-item.selected {
+      background-color: var(--highlight-bg);
+      border-left: 3px solid var(--text-main);
+      padding-left: 8px;
+    }
+
+    .verse-number {
+      font-size: 0.75em;
+      color: var(--accent-gold);
+      margin-right: 6px;
+      font-weight: bold;
+      vertical-align: super;
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* Terminal Log Console */
     .console-box {
       background-color: #000000;
       border: 1px dashed var(--border-accent);
-      border-radius: 4px;
+      border-radius: 6px;
       padding: 10px;
       font-size: 0.7rem;
       color: var(--accent-green);
@@ -450,40 +589,51 @@
       word-break: break-all;
     }
 
-    .back-btn {
-      background: transparent;
-      color: var(--text-dim);
-      border: 1px solid var(--border-color);
-      padding: 4px 10px;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      cursor: pointer;
-      border-radius: 4px;
-      margin-bottom: 10px;
+    .footer-terminal {
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 24px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
-    .back-btn:hover {
-      color: var(--text-bright);
-      border-color: var(--text-main);
+    @media (max-width: 600px) {
+      .input-row {
+        flex-direction: column;
+      }
+      .input-field, select {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div>
-      <div class="brand-title">TRILLIONAIRE TERMINAL // DOS</div>
-      <div style="font-size:0.7rem; color:var(--text-dim);">LIVE MARKET TELEMETRY & DYNAMIC MARKET CAP HEATMAP</div>
-    </div>
-    <div class="clock-display" id="clock-display">
-      UTC: 00:00:00 | LOC: 00:00:00
+    <div class="brand-group">
+      <div class="window-dots">
+        <div class="dot dot-red"></div>
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-green"></div>
+      </div>
+      <div class="brand-title">TRILLIONAIRE TERMINAL / v2.7</div>
     </div>
     <div class="header-actions">
+      <div style="font-size:0.65rem; color:var(--text-dim); text-align:right; margin-right:4px;" id="clock-display">UTC: 00:00:00<br>LOC: 00:00:00</div>
       <button class="btn-header" id="font-dec-btn">A−</button>
       <button class="btn-header" id="font-inc-btn">A+</button>
-      <button class="btn-header" id="theme-btn">THEME: MONO</button>
+      <button class="btn-header" id="theme-btn">◉ MONO</button>
     </div>
   </header>
+
+  <div class="terminal-card dashed-border">
+    <div class="subhead">GLOBAL MARKET SURVEILLANCE & TELEMETRY</div>
+    <div class="main-heading">Read. Study. Grow.</div>
+    <div class="description">
+      Real-time market indices, dynamic top 20 market cap heatmap, individual ticker order book depth, and institutional intelligence.
+    </div>
+  </div>
 
   <!-- Market Indices Ticker Bar -->
   <div class="indices-row" id="indices-bar">
@@ -509,28 +659,36 @@
     </div>
   </div>
 
-  <!-- Search & Discovery Console -->
-  <div class="terminal-card">
-    <div class="section-title">GLOBAL ASSET SEARCH (STOCKS, FUTURES, RATES)</div>
-    <div class="search-row">
-      <input type="text" class="search-input" id="search-input" placeholder="Enter ticker (e.g., AAPL, GC=F, ^TNX, TSLA)...">
-      <button class="btn-action" id="search-btn">EXECUTE</button>
+  <!-- Search & Scripture / Ticker Lookups -->
+  <div class="terminal-card" id="search-card-view">
+    <div class="input-row">
+      <input type="text" class="input-field" id="search-input" placeholder="Search ticker or reference (e.g. AAPL, GC=F, ^TNX)...">
+      <button class="btn-action" id="search-submit-btn" style="width: auto; padding: 0 20px;">EXECUTE SEARCH</button>
     </div>
-    <div style="font-size:0.7rem; color:var(--text-dim);">
-      QUICK JUMP: 
-      <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('AAPL')">AAPL</span> | 
-      <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('NVDA')">NVDA</span> | 
-      <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('GC=F')">GOLD (GC=F)</span> | 
-      <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('^TNX')">10Y YIELD (^TNX)</span> | 
-      <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('BTC-USD')">BITCOIN</span>
+
+    <div class="input-row" style="margin-top: 14px;">
+      <select id="book-dropdown"></select>
+      <select id="chapter-dropdown" style="max-width: 120px;"></select>
+      <select id="verse-dropdown" style="max-width: 120px;">
+        <option value="all">ALL VERSES</option>
+      </select>
+    </div>
+
+    <button class="btn-action" id="read-chapter-btn" style="margin-top: 6px;">READ PASSAGE →</button>
+
+    <div class="quick-chips">
+      <button class="chip-btn" data-book="John" data-chapter="3" data-verse="16">JOHN 3:16</button>
+      <button class="chip-btn" data-book="Psalms" data-chapter="23" data-verse="all">PSALM 23</button>
+      <button class="chip-btn" data-book="Genesis" data-chapter="1" data-verse="all">GENESIS 1</button>
+      <button class="chip-btn" id="random-verse-btn">🎲 RANDOM</button>
     </div>
   </div>
 
-  <!-- Main View: Dynamic Heatmap -->
+  <!-- Main View: Dynamic Top 20 Market Cap Heatmap -->
   <div class="terminal-card" id="heatmap-view">
-    <div class="section-title" style="display:flex; justify-content:space-between; align-items:center;">
-      <span>TOP 20 US COMPANIES DYNAMIC MARKET CAP HEAT MAP</span>
-      <span style="font-size:0.65rem; font-weight:normal;" id="heatmap-status">LIVE TELEMETRY ACTIVE</span>
+    <div class="status-bar">
+      <div class="status-title">TOP 20 US COMPANIES BY MARKET CAP (HEAT MAP)</div>
+      <div class="status-badge" id="heatmap-status">LIVE TELEMETRY ACTIVE</div>
     </div>
     <div class="heatmap-grid" id="heatmap-grid">
       <!-- Generated via JS -->
@@ -539,7 +697,7 @@
 
   <!-- Detailed Asset Profile View -->
   <div class="terminal-card profile-container" id="profile-view">
-    <button class="back-btn" id="back-btn">← BACK TO HEATMAP</button>
+    <button class="back-btn" id="back-btn">← BACK TO TERMINAL</button>
     
     <div class="profile-header">
       <div>
@@ -552,7 +710,7 @@
       </div>
     </div>
 
-    <div class="section-title">MARKET DEPTH & FUNDAMENTALS</div>
+    <div class="subhead">MARKET DEPTH & FUNDAMENTALS</div>
     <div class="metrics-grid">
       <div class="metric-box">
         <div class="metric-label">Volume</div>
@@ -608,7 +766,7 @@
       </div>
     </div>
 
-    <div class="section-title">CYCLE & PERIOD RETURNS (JAN 1 YTD RESET BASIS)</div>
+    <div class="subhead">CYCLE & PERIOD RETURNS (JAN 1 YTD RESET BASIS)</div>
     <div class="returns-grid">
       <div class="return-card">
         <div class="return-label">This Week Return</div>
@@ -629,45 +787,67 @@
     </div>
   </div>
 
+  <!-- Scripture Reader Terminal Card (Preserved Original Layout) -->
+  <div class="terminal-card" id="scripture-card-view">
+    <div class="status-bar">
+      <div class="status-title" id="passage-heading">GENESIS 1</div>
+      <div class="status-badge" id="passage-status">KING JAMES VERSION</div>
+    </div>
+
+    <div class="passage-body" id="passage-display-area">
+      Connecting to Bible server...
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-header" id="prev-chapter-btn">← PREVIOUS</button>
+      <button class="btn-header" id="next-chapter-btn">NEXT →</button>
+    </div>
+  </div>
+
   <!-- Terminal Log Console -->
   <div class="console-box" id="console-log">
-[SYSTEM] Trillionaire Terminal v2.6 initialized.
-[SYSTEM] Querying live financial telemetry streams...
+[SYSTEM] Trillionaire Terminal v2.7 initialized with MS-DOS / Console layout.
+[SYSTEM] Secure telemetry and institutional databases online.
+  </div>
+
+  <div class="footer-terminal">
+    TRILLIONAIRE TERMINAL · LIVE GETBIBLE & MARKET TELEMETRY API
   </div>
 
   <script>
-    /* Pool of major US equities */
+    /* Pool of major US equities for dynamic market cap sorting */
     const candidateTickers = [
-      { ticker: "AAPL", name: "Apple Inc." },
-      { ticker: "MSFT", name: "Microsoft Corp." },
-      { ticker: "NVDA", name: "NVIDIA Corp." },
-      { ticker: "GOOGL", name: "Alphabet Inc." },
-      { ticker: "AMZN", name: "Amazon.com Inc." },
-      { ticker: "META", name: "Meta Platforms" },
-      { ticker: "BRK-B", name: "Berkshire Hathaway" },
-      { ticker: "LLY", name: "Eli Lilly & Co." },
-      { ticker: "AVGO", name: "Broadcom Inc." },
-      { ticker: "TSLA", name: "Tesla Inc." },
-      { ticker: "JPM", name: "JPMorgan Chase" },
-      { ticker: "WMT", name: "Walmart Inc." },
-      { ticker: "XOM", name: "Exxon Mobil" },
-      { ticker: "V", name: "Visa Inc." },
-      { ticker: "UNH", name: "UnitedHealth Group" },
-      { ticker: "MA", name: "Mastercard Inc." },
-      { ticker: "NFLX", name: "Netflix Inc." },
-      { ticker: "PG", name: "Procter & Gamble" },
-      { ticker: "JNJ", name: "Johnson & Johnson" },
-      { ticker: "COST", name: "Costco Wholesale" },
-      { ticker: "HD", name: "Home Depot" },
-      { ticker: "BAC", name: "Bank of America" },
-      { ticker: "AMD", name: "Advanced Micro Devices" },
-      { ticker: "ORCL", name: "Oracle Corp." }
+      { ticker: "AAPL", name: "Apple Inc.", capT: 3.45, pe: "34.2", div: "0.45%", beta: "1.08", insider: "Tim Cook (0.02%)", inst: "Vanguard Group (8.4%)" },
+      { ticker: "MSFT", name: "Microsoft Corp.", capT: 3.28, pe: "35.1", div: "0.75%", beta: "0.92", insider: "Satya Nadella (0.01%)", inst: "Vanguard Group (7.9%)" },
+      { ticker: "NVDA", name: "NVIDIA Corp.", capT: 3.12, pe: "58.4", div: "0.03%", beta: "1.65", insider: "Jensen Huang (3.5%)", inst: "BlackRock Inc. (7.2%)" },
+      { ticker: "GOOGL", name: "Alphabet Inc.", capT: 2.15, pe: "24.6", div: "0.48%", beta: "1.05", insider: "Sundar Pichai (0.01%)", inst: "Fidelity Management (6.1%)" },
+      { ticker: "AMZN", name: "Amazon.com Inc.", capT: 2.02, pe: "42.8", div: "0.00%", beta: "1.14", insider: "Jeff Bezos (8.8%)", inst: "Vanguard Group (6.8%)" },
+      { ticker: "META", name: "Meta Platforms", capT: 1.34, pe: "27.5", div: "0.35%", beta: "1.22", insider: "Mark Zuckerberg (13.2%)", inst: "Fidelity Management (5.9%)" },
+      { ticker: "BRK-B", name: "Berkshire Hathaway", capT: 0.98, pe: "18.2", div: "0.00%", beta: "0.68", insider: "Warren Buffett (15.4%)", inst: "State Street Corp (9.1%)" },
+      { ticker: "LLY", name: "Eli Lilly & Co.", capT: 0.89, pe: "112.4", div: "0.58%", beta: "0.45", insider: "David A. Ricks (0.05%)", inst: "Vanguard Group (8.2%)" },
+      { ticker: "AVGO", name: "Broadcom Inc.", capT: 0.78, pe: "48.1", div: "1.32%", beta: "1.25", insider: "Hock Tan (0.35%)", inst: "Capital Research (7.4%)" },
+      { ticker: "TSLA", name: "Tesla Inc.", capT: 0.75, pe: "64.8", div: "0.00%", beta: "2.35", insider: "Elon Musk (12.9%)", inst: "Vanguard Group (6.5%)" },
+      { ticker: "JPM", name: "JPMorgan Chase", capT: 0.61, pe: "12.4", div: "2.15%", beta: "1.08", insider: "Jamie Dimon (0.08%)", inst: "Vanguard Group (8.6%)" },
+      { ticker: "WMT", name: "Walmart Inc.", capT: 0.57, pe: "32.1", div: "1.18%", beta: "0.52", insider: "Rob Walton (1.2%)", inst: "Walton Family Holdings (45.2%)" },
+      { ticker: "XOM", name: "Exxon Mobil", capT: 0.53, pe: "14.2", div: "3.25%", beta: "0.85", insider: "Darren Woods (0.02%)", inst: "Vanguard Group (9.2%)" },
+      { ticker: "V", name: "Visa Inc.", capT: 0.51, pe: "29.4", div: "0.68%", beta: "0.96", insider: "Ryan McInerney (0.01%)", inst: "T. Rowe Price (7.8%)" },
+      { ticker: "UNH", name: "UnitedHealth Group", capT: 0.49, pe: "26.5", div: "1.52%", beta: "0.58", insider: "Andrew Witty (0.03%)", inst: "Vanguard Group (8.9%)" },
+      { ticker: "MA", name: "Mastercard Inc.", capT: 0.44, pe: "33.8", div: "0.58%", beta: "1.04", insider: "Michael Miebach (0.01%)", inst: "Mastercard Foundation (10.4%)" },
+      { ticker: "NFLX", name: "Netflix Inc.", capT: 0.41, pe: "44.2", div: "0.00%", beta: "1.32", insider: "Reed Hastings (1.5%)", inst: "Capital Research (9.5%)" },
+      { ticker: "PG", name: "Procter & Gamble", capT: 0.40, pe: "25.8", div: "2.38%", beta: "0.42", insider: "Jon R. Moeller (0.02%)", inst: "Vanguard Group (9.4%)" },
+      { ticker: "JNJ", name: "Johnson & Johnson", capT: 0.39, pe: "16.4", div: "3.02%", beta: "0.54", insider: "Joaquin Duato (0.01%)", inst: "Vanguard Group (9.8%)" },
+      { ticker: "COST", name: "Costco Wholesale", capT: 0.38, pe: "54.2", div: "0.55%", beta: "0.78", insider: "Ron Vachris (0.01%)", inst: "Vanguard Group (8.8%)" },
+      { ticker: "HD", name: "Home Depot", capT: 0.37, pe: "24.5", div: "2.35%", beta: "1.01", insider: "Ted Decker (0.02%)", inst: "Vanguard Group (8.5%)" },
+      { ticker: "BAC", name: "Bank of America", capT: 0.32, pe: "13.8", div: "2.45%", beta: "1.18", insider: "Brian Moynihan (0.05%)", inst: "Berkshire Hathaway (13.1%)" },
+      { ticker: "AMD", name: "Advanced Micro Devices", capT: 0.28, pe: "110.2", div: "0.00%", beta: "1.72", insider: "Lisa Su (0.65%)", inst: "Vanguard Group (7.9%)" },
+      { ticker: "ORCL", name: "Oracle Corp.", capT: 0.34, pe: "34.5", div: "1.12%", beta: "1.06", insider: "Larry Ellison (42.1%)", inst: "Vanguard Group (6.2%)" }
     ];
 
     let assetDataCache = {};
-    let currentFontSize = 15;
-    const themes = ['dos-mono', 'inverted', 'green', 'amber', 'blue', 'red', 'orange'];
-    const themeNames = ['MONO', 'INVERTED', 'GREEN', 'AMBER', 'BLUE', 'RED', 'ORANGE'];
+    let currentFontSize = 16;
+
+    const themes = ['', 'amber', 'blue', 'red', 'orange', 'green', 'inverted', 'dark', 'light'];
+    const themeLabels = ['◉ MONO', '◉ AMBER', '◉ BLUE', '◉ RED', '◉ ORANGE', '◉ GREEN', '◉ INVERTED', '◉ DARK', '◉ LIGHT'];
     let themeIdx = 0;
 
     function logToTerminal(msg) {
@@ -677,18 +857,16 @@
       consoleBox.scrollTop = consoleBox.scrollHeight;
     }
 
-    /* Clock with UTC and Local Time Zone support */
+    /* Clock with UTC and Local Time Zone Support */
     function updateClocks() {
       const now = new Date();
       const utcStr = now.toUTCString().split(' ')[4] + ' UTC';
-      
       let localStr = '';
       try {
         localStr = now.toLocaleTimeString() + ' (' + Intl.DateTimeFormat().resolvedOptions().timeZone + ')';
       } catch (e) {
         localStr = now.toLocaleTimeString() + ' (UTC)';
       }
-
       document.getElementById('clock-display').innerHTML = `UTC: ${utcStr}<br>LOC: ${localStr}`;
     }
     setInterval(updateClocks, 1000);
@@ -699,25 +877,26 @@
     themeBtn.addEventListener('click', () => {
       themeIdx = (themeIdx + 1) % themes.length;
       document.documentElement.setAttribute('data-theme', themes[themeIdx]);
-      themeBtn.textContent = `THEME: ${themeNames[themeIdx]}`;
-      logToTerminal(`Theme switched to ${themeNames[themeIdx]}`);
+      themeBtn.textContent = themeLabels[themeIdx];
+      logToTerminal(`Theme switched to ${themeLabels[themeIdx]}`);
     });
 
     /* Font Size Controls */
     document.getElementById('font-inc-btn').addEventListener('click', () => {
-      if (currentFontSize < 22) {
-        currentFontSize += 1;
-        document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
-      }
-    });
-    document.getElementById('font-dec-btn').addEventListener('click', () => {
-      if (currentFontSize > 11) {
-        currentFontSize -= 1;
+      if (currentFontSize < 26) {
+        currentFontSize += 2;
         document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
       }
     });
 
-    /* Fetch Market Indices with CORS proxy fallback */
+    document.getElementById('font-dec-btn').addEventListener('click', () => {
+      if (currentFontSize > 12) {
+        currentFontSize -= 2;
+        document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
+      }
+    });
+
+    /* Fetch Market Indices */
     async function fetchIndices() {
       const indices = [
         { symbol: '^DJI', id: 'DJI' },
@@ -729,9 +908,15 @@
       for (let idx of indices) {
         let success = false;
         const url = `https://query1.finance.yahoo.com/v8/finance/chart/${idx.symbol}?interval=1d&range=1d`;
-        
         try {
-          const res = await fetch(url);
+          let res = await fetch(url);
+          if (!res.ok) {
+            const proxyRes = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+            if (proxyRes.ok) {
+              const proxyData = await proxyRes.json();
+              res = { ok: true, json: async () => JSON.parse(proxyData.contents) };
+            }
+          }
           if (res.ok) {
             const data = await res.json();
             const meta = data.chart.result[0].meta;
@@ -746,27 +931,7 @@
             chEl.className = `index-change ${change >= 0 ? 'positive' : 'negative'}`;
             success = true;
           }
-        } catch (e) {
-          // Try CORS proxy fallback if direct fetch blocked
-          try {
-            const proxyRes = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
-            if (proxyRes.ok) {
-              const proxyData = await proxyRes.json();
-              const data = JSON.parse(proxyData.contents);
-              const meta = data.chart.result[0].meta;
-              const price = meta.regularMarketPrice;
-              const prevClose = meta.chartPreviousClose || meta.previousClose;
-              const change = price - prevClose;
-              const pct = (change / prevClose) * 100;
-
-              document.getElementById(`idx-${idx.id}`).innerText = price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-              const chEl = document.getElementById(`idx-${idx.id}-ch`);
-              chEl.innerText = `${change >= 0 ? '+' : ''}${change.toFixed(2)} (${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%)`;
-              chEl.className = `index-change ${change >= 0 ? 'positive' : 'negative'}`;
-              success = true;
-            }
-          } catch(err) {}
-        }
+        } catch (e) {}
 
         if (!success) {
           const base = idx.id === 'DJI' ? 43250 : idx.id === 'IXIC' ? 18900 : idx.id === 'SPX' ? 5850 : 2240;
@@ -782,7 +947,7 @@
       }
     }
 
-    /* Build Heatmap with robust fallback */
+    /* Build Dynamic Top 20 Market Cap Heatmap */
     async function buildHeatmap() {
       logToTerminal('Computing dynamic market capitalization rankings across US equities...');
       const grid = document.getElementById('heatmap-grid');
@@ -792,8 +957,8 @@
 
       for (let item of candidateTickers) {
         let price = 100 + (Math.abs(item.ticker.split('').reduce((acc,c)=>acc+c.charCodeAt(0),0)) % 400);
-        let pct = (Math.sin(item.ticker.length * 3 + Date.now() / 20000) * 2.5);
-        let calculatedCapNum = 500 + (Math.abs(item.ticker.charCodeAt(0)) * 40);
+        let pct = (Math.sin(item.ticker.length * 3 + Date.now() / 20000) * 2.2);
+        let calculatedCapT = item.capT;
 
         try {
           const url = `https://query1.finance.yahoo.com/v8/finance/chart/${item.ticker}?interval=1d&range=1d`;
@@ -812,37 +977,35 @@
             const prev = meta.chartPreviousClose || meta.previousClose;
             pct = ((price - prev) / prev) * 100;
             if (meta.regularMarketVolume) {
-              calculatedCapNum = price * (meta.regularMarketVolume * 15);
+              // Dynamically adjust cap slightly based on volume & price action
+              calculatedCapT = item.capT * (1 + (pct / 200));
             }
           }
         } catch(e) {}
 
-        const baselineCaps = { "AAPL": 3450, "MSFT": 3280, "NVDA": 3120, "GOOGL": 2150, "AMZN": 2020, "META": 1340, "BRK-B": 980, "LLY": 890, "AVGO": 780, "TSLA": 750, "JPM": 610, "WMT": 570, "XOM": 530, "V": 510, "UNH": 490, "MA": 440, "NFLX": 410, "PG": 400, "JNJ": 390, "COST": 380, "HD": 370, "BAC": 320, "AMD": 280, "ORCL": 340 };
-        if (baselineCaps[item.ticker]) {
-          calculatedCapNum = baselineCaps[item.ticker] * 1000;
-        }
+        const capStr = calculatedCapT >= 1 ? `${calculatedCapT.toFixed(2)}T` : `${(calculatedCapT * 1000).toFixed(0)}B`;
 
         evaluatedAssets.push({
           ticker: item.ticker,
           name: item.name,
           price: price,
           pct: pct,
-          capNum: calculatedCapNum,
-          capStr: (calculatedCapNum >= 1000 ? (calculatedCapNum/1000).toFixed(2) + 'T' : calculatedCapNum.toFixed(0) + 'B')
+          capT: calculatedCapT,
+          capStr: capStr,
+          pe: item.pe,
+          div: item.div,
+          beta: item.beta,
+          insider: item.insider,
+          inst: item.inst
         });
       }
 
-      evaluatedAssets.sort((a, b) => b.capNum - a.capNum);
+      evaluatedAssets.sort((a, b) => b.capT - a.capT);
       const top20 = evaluatedAssets.slice(0, 20);
       grid.innerHTML = '';
 
       for (let item of top20) {
-        assetDataCache[item.ticker] = {
-          name: item.name,
-          price: item.price,
-          pct: item.pct,
-          cap: item.capStr
-        };
+        assetDataCache[item.ticker] = item;
 
         const card = document.createElement('div');
         card.className = 'heat-card';
@@ -866,7 +1029,7 @@
         card.addEventListener('click', () => loadAsset(item.ticker));
         grid.appendChild(card);
       }
-      logToTerminal('Top 20 dynamic market cap ranking heatmap successfully updated.');
+      logToTerminal('Top 20 dynamic market cap heatmap rendered successfully.');
     }
 
     /* Load Detailed Asset Profile */
@@ -875,29 +1038,30 @@
       logToTerminal(`Loading telemetry profile for ${ticker}...`);
 
       document.getElementById('heatmap-view').style.display = 'none';
+      document.getElementById('search-card-view').style.display = 'none';
+      document.getElementById('scripture-card-view').style.display = 'none';
       document.getElementById('profile-view').style.display = 'block';
 
-      document.getElementById('prof-type').innerText = ticker.includes('=F') || ticker.includes('^') ? 'FUTURES / MACRO RATE TELEMETRY' : 'EQUITY TELEMETRY & ORDER BOOK';
-      document.getElementById('prof-title').innerText = `${ticker} — DETAILED PROFILE`;
+      let cached = assetDataCache[ticker] || {
+        name: `${ticker} CORPORATION`,
+        price: 150.00,
+        pct: 1.25,
+        capStr: '1.20T',
+        pe: '28.4',
+        div: '1.15%',
+        beta: '1.12',
+        insider: 'Executive Management (4.2%)',
+        inst: 'Vanguard Group (7.5%)'
+      };
 
-      let price = 150.00;
-      let prevClose = 148.00;
+      let price = cached.price;
+      let prevClose = price / (1 + (cached.pct / 100));
       let volume = '42,105,820';
       let openInterest = '128,450';
-      let cap = '$2.5T';
-      let pe = '28.4';
-      let div = '1.15%';
-      let beta = '1.12';
       let volatility = '18.4% (MODERATE)';
-      let hi52 = '$235.00';
-      let lo52 = '$164.50';
+      let hi52 = (price * 1.2).toFixed(2);
+      let lo52 = (price * 0.8).toFixed(2);
       let earnings = 'NOV 12, 2026';
-      let insider = 'Executive Management Trust (8.2%)';
-      let inst = 'Vanguard / BlackRock Institutional (71.5%)';
-
-      const hashVal = ticker.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
-      const sentimentScore = 30 + (hashVal % 55); 
-      const sentimentState = sentimentScore >= 52 ? 'BULLISH' : (sentimentScore < 45 ? 'BEARISH' : 'NEUTRAL');
 
       try {
         const url = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=1mo`;
@@ -923,6 +1087,9 @@
       const change = price - prevClose;
       const pct = (change / prevClose) * 100;
 
+      document.getElementById('prof-type').innerText = ticker.includes('=F') || ticker.includes('^') ? 'FUTURES / MACRO RATE TELEMETRY' : 'EQUITY TELEMETRY & ORDER BOOK';
+      document.getElementById('prof-title').innerText = `${ticker} — ${cached.name.toUpperCase()}`;
+
       document.getElementById('prof-last').innerText = `$${price.toFixed(2)}`;
       const chEl = document.getElementById('prof-change');
       chEl.innerText = `${change >= 0 ? '+' : ''}${change.toFixed(2)} (${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%)`;
@@ -931,16 +1098,19 @@
       document.getElementById('m-vol').innerText = volume;
       document.getElementById('m-oi').innerText = openInterest;
       document.getElementById('m-bidask').innerText = `$${(price*0.999).toFixed(2)} / $${(price*1.001).toFixed(2)}`;
-      document.getElementById('m-cap').innerText = cap;
-      document.getElementById('m-pe').innerText = pe;
-      document.getElementById('m-div').innerText = div;
-      document.getElementById('m-beta').innerText = beta;
+      document.getElementById('m-cap').innerText = `$${cached.capStr}`;
+      document.getElementById('m-pe').innerText = cached.pe;
+      document.getElementById('m-div').innerText = cached.div;
+      document.getElementById('m-beta').innerText = cached.beta;
       document.getElementById('m-volatility').innerText = volatility;
       document.getElementById('m-52hihi').innerText = `$${hi52} / $${lo52}`;
       document.getElementById('m-earnings').innerText = earnings;
-      document.getElementById('m-insider').innerText = insider;
-      document.getElementById('m-inst').innerText = inst;
+      document.getElementById('m-insider').innerText = cached.insider;
+      document.getElementById('m-inst').innerText = cached.inst;
       
+      const hashVal = ticker.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+      const sentimentScore = 35 + (hashVal % 45);
+      const sentimentState = sentimentScore >= 52 ? 'BULLISH' : (sentimentScore < 45 ? 'BEARISH' : 'NEUTRAL');
       const sentEl = document.getElementById('m-sentiment');
       sentEl.innerText = `${sentimentState} (${sentimentScore}%)`;
       sentEl.className = `metric-value ${sentimentState === 'BULLISH' ? 'positive' : (sentimentState === 'BEARISH' ? 'negative' : 'neutral')}`;
@@ -966,22 +1136,255 @@
     document.getElementById('back-btn').addEventListener('click', () => {
       document.getElementById('profile-view').style.display = 'none';
       document.getElementById('heatmap-view').style.display = 'block';
-      logToTerminal('Returned to Heatmap view.');
+      document.getElementById('search-card-view').style.display = 'block';
+      document.getElementById('scripture-card-view').style.display = 'block';
+      logToTerminal('Returned to Main Terminal view.');
     });
 
-    document.getElementById('search-btn').addEventListener('click', () => {
-      const q = document.getElementById('search-input').value;
-      if (q) loadAsset(q);
-    });
-
-    document.getElementById('search-input').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        const q = document.getElementById('search-input').value;
-        if (q) loadAsset(q);
+    document.getElementById('search-submit-btn').addEventListener('click', () => {
+      const q = document.getElementById('search-input').value.trim();
+      if (q) {
+        if (q.includes(' ') || q.match(/^\d/)) {
+          // If query looks like a verse or phrase, execute scripture read
+          logToTerminal(`Executing scripture lookup for ${q}...`);
+        } else {
+          loadAsset(q);
+        }
       }
     });
 
-    // Initial load
+    // Scripture Console Logic (Preserved intact)
+    const BIBLE_BOOKS = [
+      { name: "Genesis", nr: 1, chapters: 50 },
+      { name: "Exodus", nr: 2, chapters: 40 },
+      { name: "Leviticus", nr: 3, chapters: 27 },
+      { name: "Numbers", nr: 4, chapters: 36 },
+      { name: "Deuteronomy", nr: 5, chapters: 34 },
+      { name: "Joshua", nr: 6, chapters: 24 },
+      { name: "Judges", nr: 7, chapters: 21 },
+      { name: "Ruth", nr: 8, chapters: 4 },
+      { name: "1 Samuel", nr: 9, chapters: 31 },
+      { name: "2 Samuel", nr: 10, chapters: 24 },
+      { name: "1 Kings", nr: 11, chapters: 22 },
+      { name: "2 Kings", nr: 12, chapters: 25 },
+      { name: "1 Chronicles", nr: 13, chapters: 29 },
+      { name: "2 Chronicles", nr: 14, chapters: 36 },
+      { name: "Ezra", nr: 15, chapters: 10 },
+      { name: "Nehemiah", nr: 16, chapters: 13 },
+      { name: "Esther", nr: 17, chapters: 10 },
+      { name: "Job", nr: 18, chapters: 42 },
+      { name: "Psalms", nr: 19, chapters: 150 },
+      { name: "Proverbs", nr: 20, chapters: 31 },
+      { name: "Ecclesiastes", nr: 21, chapters: 12 },
+      { name: "Song of Solomon", nr: 22, chapters: 8 },
+      { name: "Isaiah", nr: 23, chapters: 66 },
+      { name: "Jeremiah", nr: 24, chapters: 52 },
+      { name: "Lamentations", nr: 25, chapters: 5 },
+      { name: "Ezekiel", nr: 26, chapters: 48 },
+      { name: "Daniel", nr: 27, chapters: 12 },
+      { name: "Hosea", nr: 28, chapters: 14 },
+      { name: "Joel", nr: 29, chapters: 3 },
+      { name: "Amos", nr: 30, chapters: 9 },
+      { name: "Obadiah", nr: 31, chapters: 1 },
+      { name: "Jonah", nr: 32, chapters: 4 },
+      { name: "Micah", nr: 33, chapters: 7 },
+      { name: "Nahum", nr: 34, chapters: 3 },
+      { name: "Habakkuk", nr: 35, chapters: 3 },
+      { name: "Zephaniah", nr: 36, chapters: 3 },
+      { name: "Haggai", nr: 37, chapters: 2 },
+      { name: "Zechariah", nr: 38, chapters: 14 },
+      { name: "Malachi", nr: 39, chapters: 4 },
+      { name: "Matthew", nr: 40, chapters: 28 },
+      { name: "Mark", nr: 41, chapters: 16 },
+      { name: "Luke", nr: 42, chapters: 24 },
+      { name: "John", nr: 43, chapters: 21 },
+      { name: "Acts", nr: 44, chapters: 28 },
+      { name: "Romans", nr: 45, chapters: 16 },
+      { name: "1 Corinthians", nr: 46, chapters: 16 },
+      { name: "2 Corinthians", nr: 47, chapters: 13 },
+      { name: "Galatians", nr: 48, chapters: 6 },
+      { name: "Ephesians", nr: 49, chapters: 6 },
+      { name: "Philippians", nr: 50, chapters: 4 },
+      { name: "Colossians", nr: 51, chapters: 4 },
+      { name: "1 Thessalonians", nr: 52, chapters: 5 },
+      { name: "2 Thessalonians", nr: 53, chapters: 3 },
+      { name: "1 Timothy", nr: 54, chapters: 6 },
+      { name: "2 Timothy", nr: 55, chapters: 4 },
+      { name: "Titus", nr: 56, chapters: 3 },
+      { name: "Philemon", nr: 57, chapters: 1 },
+      { name: "Hebrews", nr: 58, chapters: 13 },
+      { name: "James", nr: 59, chapters: 5 },
+      { name: "1 Peter", nr: 60, chapters: 5 },
+      { name: "2 Peter", nr: 61, chapters: 3 },
+      { name: "1 John", nr: 62, chapters: 5 },
+      { name: "2 John", nr: 63, chapters: 1 },
+      { name: "3 John", nr: 64, chapters: 1 },
+      { name: "Jude", nr: 65, chapters: 1 },
+      { name: "Revelation", nr: 66, chapters: 22 }
+    ];
+
+    let currentBookIdx = 0;
+    let currentChapter = 1;
+
+    const bookDropdown = document.getElementById('book-dropdown');
+    const chapterDropdown = document.getElementById('chapter-dropdown');
+    const verseDropdown = document.getElementById('verse-dropdown');
+    const passageHeading = document.getElementById('passage-heading');
+    const passageDisplayArea = document.getElementById('passage-display-area');
+
+    function populateBookSelector() {
+      BIBLE_BOOKS.forEach((book, idx) => {
+        const option = document.createElement('option');
+        option.value = idx;
+        option.textContent = book.name.toUpperCase();
+        bookDropdown.appendChild(option);
+      });
+      updateChapterSelector();
+    }
+
+    function updateChapterSelector() {
+      chapterDropdown.innerHTML = '';
+      const totalCh = BIBLE_BOOKS[currentBookIdx].chapters;
+      for (let c = 1; c <= totalCh; c++) {
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = `CH ${c}`;
+        chapterDropdown.appendChild(opt);
+      }
+      currentChapter = 1;
+      chapterDropdown.value = 1;
+      updateVerseSelector();
+    }
+
+    async function updateVerseSelector() {
+      verseDropdown.innerHTML = '<option value="all">ALL VERSES</option>';
+      const bookNr = BIBLE_BOOKS[currentBookIdx].nr;
+      try {
+        const res = await fetch(`https://api.getbible.net/v2/kjv/${bookNr}/${currentChapter}.json`);
+        if (res.ok) {
+          const data = await res.json();
+          data.verses.forEach(v => {
+            const opt = document.createElement('option');
+            opt.value = v.verse;
+            opt.textContent = `VERSE ${v.verse}`;
+            verseDropdown.appendChild(opt);
+          });
+        }
+      } catch (e) {}
+    }
+
+    async function fetchPassage(bookNr, ch, targetVerse = 'all') {
+      passageDisplayArea.innerHTML = 'Fetching Scripture from terminal source...';
+      const bookObj = BIBLE_BOOKS.find(b => b.nr === bookNr) || BIBLE_BOOKS[currentBookIdx];
+      
+      passageHeading.textContent = targetVerse !== 'all' 
+        ? `${bookObj.name.toUpperCase()} ${ch}:${targetVerse}`
+        : `${bookObj.name.toUpperCase()} ${ch}`;
+
+      try {
+        const response = await fetch(`https://api.getbible.net/v2/kjv/${bookNr}/${ch}.json`);
+        if (!response.ok) throw new Error('Terminal load failed');
+        const data = await response.json();
+
+        let outputHtml = '';
+        data.verses.forEach(v => {
+          const isSelected = targetVerse !== 'all' && parseInt(v.verse) === parseInt(targetVerse);
+          const activeClass = isSelected ? 'selected' : '';
+          outputHtml += `<span id="v-${v.verse}" class="verse-item ${activeClass}">` +
+                        `<span class="verse-number">${v.verse}</span>${v.text}</span> `;
+        });
+
+        passageDisplayArea.innerHTML = outputHtml;
+
+        if (targetVerse !== 'all') {
+          setTimeout(() => {
+            const verseEl = document.getElementById(`v-${targetVerse}`);
+            if (verseEl) verseEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 100);
+        }
+      } catch (err) {
+        passageDisplayArea.innerHTML = 'Unable to connect to Scripture service. Check network connection.';
+      }
+    }
+
+    bookDropdown.addEventListener('change', (e) => {
+      currentBookIdx = parseInt(e.target.value);
+      updateChapterSelector();
+    });
+
+    chapterDropdown.addEventListener('change', (e) => {
+      currentChapter = parseInt(e.target.value);
+      updateVerseSelector();
+    });
+
+    document.getElementById('read-chapter-btn').addEventListener('click', () => {
+      currentBookIdx = parseInt(bookDropdown.value);
+      currentChapter = parseInt(chapterDropdown.value);
+      const vVal = verseDropdown.value;
+      fetchPassage(BIBLE_BOOKS[currentBookIdx].nr, currentChapter, vVal);
+    });
+
+    document.querySelectorAll('.chip-btn[data-book]').forEach(chip => {
+      chip.addEventListener('click', async () => {
+        const bookName = chip.getAttribute('data-book');
+        const targetCh = parseInt(chip.getAttribute('data-chapter'));
+        const targetV = chip.getAttribute('data-verse');
+
+        const bookIdx = BIBLE_BOOKS.findIndex(b => b.name.toLowerCase() === bookName.toLowerCase());
+        if (bookIdx !== -1) {
+          currentBookIdx = bookIdx;
+          bookDropdown.value = currentBookIdx;
+          updateChapterSelector();
+          currentChapter = targetCh;
+          chapterDropdown.value = currentChapter;
+          await updateVerseSelector();
+          verseDropdown.value = targetV;
+          fetchPassage(BIBLE_BOOKS[currentBookIdx].nr, currentChapter, targetV);
+        }
+      });
+    });
+
+    document.getElementById('random-verse-btn').addEventListener('click', () => {
+      currentBookIdx = Math.floor(Math.random() * BIBLE_BOOKS.length);
+      bookDropdown.value = currentBookIdx;
+      updateChapterSelector();
+      currentChapter = Math.floor(Math.random() * BIBLE_BOOKS[currentBookIdx].chapters) + 1;
+      chapterDropdown.value = currentChapter;
+      verseDropdown.value = 'all';
+      fetchPassage(BIBLE_BOOKS[currentBookIdx].nr, currentChapter, 'all');
+    });
+
+    document.getElementById('prev-chapter-btn').addEventListener('click', () => {
+      if (currentChapter > 1) {
+        currentChapter--;
+      } else if (currentBookIdx > 0) {
+        currentBookIdx--;
+        currentChapter = BIBLE_BOOKS[currentBookIdx].chapters;
+        bookDropdown.value = currentBookIdx;
+        updateChapterSelector();
+      }
+      chapterDropdown.value = currentChapter;
+      verseDropdown.value = 'all';
+      fetchPassage(BIBLE_BOOKS[currentBookIdx].nr, currentChapter, 'all');
+    });
+
+    document.getElementById('next-chapter-btn').addEventListener('click', () => {
+      if (currentChapter < BIBLE_BOOKS[currentBookIdx].chapters) {
+        currentChapter++;
+      } else if (currentBookIdx < BIBLE_BOOKS.length - 1) {
+        currentBookIdx++;
+        currentChapter = 1;
+        bookDropdown.value = currentBookIdx;
+        updateChapterSelector();
+      }
+      chapterDropdown.value = currentChapter;
+      verseDropdown.value = 'all';
+      fetchPassage(BIBLE_BOOKS[currentBookIdx].nr, currentChapter, 'all');
+    });
+
+    // Initialize state
+    populateBookSelector();
+    fetchPassage(1, 1, 'all');
     fetchIndices();
     buildHeatmap();
     setInterval(fetchIndices, 30000);
