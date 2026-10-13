@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>TRILLIONAIRE TERMINAL // DOS v3.8</title>
+  <title>TRILLIONAIRE TERMINAL // DOS v3.9</title>
   <style>
     :root {
       --bg-main: #000000;
@@ -23,7 +23,7 @@
       --accent-green: #55ff55;
       --highlight-bg: #1c1c1c;
       --font-mono: 'Courier New', Courier, monospace;
-      --font-size: 14px;
+      --font-size: 13px;
     }
 
     [data-theme="inverted"] {
@@ -174,69 +174,77 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
 
-    body {
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
       background-color: var(--bg-main);
       color: var(--text-main);
       font-family: var(--font-mono);
       font-size: var(--font-size);
       line-height: 1.4;
-      padding: 8px;
-      width: 100%;
-      max-width: 100vw;
-      overflow-x: hidden;
+      padding: 6px;
       margin: 0 auto;
-      transition: background-color 0.2s, color 0.2s;
     }
 
     header {
       display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      border-bottom: 2px dashed var(--border-accent);
+      width: 100%;
+    }
+
+    .header-top {
+      display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 8px;
-      margin-bottom: 12px;
-      border-bottom: 2px dashed var(--border-accent);
-      flex-wrap: wrap;
-      gap: 8px;
+      width: 100%;
+      gap: 6px;
     }
 
     .brand-title {
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: bold;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       color: var(--text-bright);
+      white-space: nowrap;
     }
 
     .version-badge {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: var(--accent-gold);
       font-weight: bold;
-      margin-left: 6px;
+      margin-left: 4px;
     }
 
     .clock-display {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--text-dim);
-      text-align: right;
+      width: 100%;
     }
 
     .header-actions {
       display: flex;
       gap: 4px;
-      flex-wrap: wrap;
+      flex-shrink: 0;
     }
 
     .btn-header {
       background: var(--bg-card);
       color: var(--text-main);
       border: 1px solid var(--border-color);
-      padding: 4px 8px;
+      padding: 4px 6px;
       border-radius: 4px;
       font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       cursor: pointer;
-      transition: all 0.2s;
     }
 
     .btn-header:hover {
@@ -248,34 +256,41 @@
       background-color: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 6px;
-      padding: 10px;
-      margin-bottom: 10px;
+      padding: 8px;
+      margin-bottom: 8px;
       width: 100%;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      max-width: 100%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
       overflow: hidden;
     }
 
     .section-title {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: var(--text-dim);
-      letter-spacing: 1.2px;
+      letter-spacing: 1px;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       font-weight: bold;
     }
 
     .indices-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 8px;
-      margin-bottom: 12px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      margin-bottom: 8px;
       width: 100%;
+    }
+
+    @media (min-width: 600px) {
+      .indices-row {
+        grid-template-columns: repeat(4, 1fr);
+      }
     }
 
     .index-box {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      padding: 8px;
+      padding: 6px;
       border-radius: 4px;
       text-align: center;
       cursor: pointer;
@@ -288,27 +303,27 @@
     }
 
     .index-name {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--text-dim);
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
     }
 
     .index-val {
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       font-weight: bold;
       color: var(--text-bright);
       margin: 2px 0;
     }
 
     .index-change {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: bold;
     }
 
     .search-row {
       display: flex;
       gap: 6px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       width: 100%;
     }
 
@@ -317,10 +332,10 @@
       background: var(--bg-main);
       border: 1px solid var(--border-color);
       color: var(--text-bright);
-      padding: 8px 10px;
+      padding: 6px 8px;
       border-radius: 4px;
       font-family: var(--font-mono);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       outline: none;
       min-width: 0;
     }
@@ -333,13 +348,14 @@
       background: var(--highlight-bg);
       color: var(--text-bright);
       border: 1px solid var(--border-accent);
-      padding: 0 12px;
+      padding: 0 10px;
       border-radius: 4px;
       font-family: var(--font-mono);
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: bold;
       cursor: pointer;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
     }
 
     .btn-action:hover {
@@ -348,15 +364,27 @@
 
     .heatmap-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 6px;
       width: 100%;
+    }
+
+    @media (min-width: 450px) {
+      .heatmap-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 650px) {
+      .heatmap-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
     }
 
     .heat-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      padding: 8px;
+      padding: 6px;
       border-radius: 4px;
       cursor: pointer;
       text-align: left;
@@ -364,7 +392,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 75px;
+      min-height: 70px;
     }
 
     .heat-card:hover {
@@ -373,13 +401,13 @@
     }
 
     .heat-ticker {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: bold;
       color: var(--text-bright);
     }
 
     .heat-cap {
-      font-size: 0.6rem;
+      font-size: 0.55rem;
       color: var(--text-dim);
     }
 
@@ -396,7 +424,7 @@
     }
 
     .heat-pct {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: bold;
     }
 
@@ -407,61 +435,75 @@
 
     .profile-header {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: flex-start;
-      margin-bottom: 12px;
+      gap: 6px;
+      margin-bottom: 10px;
       border-bottom: 1px solid var(--border-color);
       padding-bottom: 8px;
-      flex-wrap: wrap;
-      gap: 8px;
+      width: 100%;
     }
 
     .profile-title {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: bold;
       color: var(--text-bright);
-      word-break: break-all;
+      width: 100%;
     }
 
     .profile-subtitle {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--text-dim);
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
+      width: 100%;
+    }
+
+    .profile-price-row {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      width: 100%;
+      flex-wrap: wrap;
     }
 
     .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 8px;
-      margin-bottom: 12px;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 6px;
+      margin-bottom: 10px;
       width: 100%;
+    }
+
+    @media (min-width: 450px) {
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     .metric-box {
       background: var(--bg-main);
       border: 1px solid var(--border-color);
-      padding: 6px 10px;
+      padding: 6px 8px;
       border-radius: 4px;
     }
 
     .metric-label {
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       color: var(--text-dim);
       text-transform: uppercase;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.5px;
     }
 
     .metric-value {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: bold;
       color: var(--text-bright);
       margin-top: 2px;
-      word-break: break-all;
     }
 
     .returns-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 6px;
       width: 100%;
     }
@@ -469,18 +511,18 @@
     .return-card {
       background: var(--bg-main);
       border: 1px solid var(--border-color);
-      padding: 6px 8px;
+      padding: 6px;
       border-radius: 4px;
     }
 
     .return-label {
-      font-size: 0.6rem;
+      font-size: 0.55rem;
       color: var(--text-dim);
       text-transform: uppercase;
     }
 
     .return-val {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: bold;
       margin-top: 2px;
     }
@@ -493,14 +535,13 @@
       background-color: var(--bg-main);
       border: 1px dashed var(--border-accent);
       border-radius: 4px;
-      padding: 8px;
-      font-size: 0.65rem;
+      padding: 6px;
+      font-size: 0.6rem;
       color: var(--accent-green);
-      height: 80px;
+      height: 70px;
       overflow-y: auto;
-      margin-top: 12px;
+      margin-top: 10px;
       white-space: pre-wrap;
-      word-break: break-all;
       width: 100%;
     }
 
@@ -508,12 +549,12 @@
       background: transparent;
       color: var(--text-dim);
       border: 1px solid var(--border-color);
-      padding: 4px 8px;
+      padding: 3px 6px;
       font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       cursor: pointer;
       border-radius: 4px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .back-btn:hover {
@@ -525,16 +566,16 @@
 <body>
 
   <header>
-    <div>
-      <div class="brand-title">TRILLIONAIRE TERMINAL <span class="version-badge">| v3.8</span></div>
+    <div class="header-top">
+      <div class="brand-title">TRILLIONAIRE TERMINAL <span class="version-badge">| v3.9</span></div>
+      <div class="header-actions">
+        <button class="btn-header" id="font-dec-btn">A−</button>
+        <button class="btn-header" id="font-inc-btn">A+</button>
+        <button class="btn-header" id="theme-btn">THEME: MONO</button>
+      </div>
     </div>
     <div class="clock-display" id="clock-display">
       UTC: 00:00:00 | LOC: 00:00:00
-    </div>
-    <div class="header-actions">
-      <button class="btn-header" id="font-dec-btn">A−</button>
-      <button class="btn-header" id="font-inc-btn">A+</button>
-      <button class="btn-header" id="theme-btn">THEME: MONO</button>
     </div>
   </header>
 
@@ -566,15 +607,15 @@
   <div class="terminal-card">
     <div class="section-title">GLOBAL ASSET SEARCH (STOCKS, FUTURES, RATES)</div>
     <div class="search-row">
-      <input type="text" class="search-input" id="search-input" placeholder="Enter ticker (e.g., AAPL, GC=F, ^TNX, TSLA)...">
+      <input type="text" class="search-input" id="search-input" placeholder="Enter ticker (e.g., AAPL, GC=F)...">
       <button class="btn-action" id="search-btn">EXECUTE</button>
     </div>
-    <div style="font-size:0.65rem; color:var(--text-dim); word-break: break-all;">
+    <div style="font-size:0.6rem; color:var(--text-dim);">
       QUICK JUMP: 
       <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('AAPL')">AAPL</span> | 
       <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('NVDA')">NVDA</span> | 
       <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('GC=F')">GOLD</span> | 
-      <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('^TNX')">10Y YIELD</span> | 
+      <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('^TNX')">10Y</span> | 
       <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('BTC-USD')">BTC</span>
     </div>
   </div>
@@ -582,8 +623,8 @@
   <!-- Main Dynamic Heatmap View -->
   <div class="terminal-card" id="heatmap-view">
     <div class="section-title" style="display:flex; justify-content:space-between; align-items:center;">
-      <span>TOP 20 DYNAMIC MARKET CAP HEAT MAP</span>
-      <span style="font-size:0.6rem; font-weight:normal;" id="heatmap-status">LIVE SCAN ACTIVE</span>
+      <span>TOP 20 MARKET CAP HEAT MAP</span>
+      <span style="font-size:0.55rem; font-weight:normal;" id="heatmap-status">LIVE SCAN ACTIVE</span>
     </div>
     <div class="heatmap-grid" id="heatmap-grid">
       <!-- Generated via dynamic cap sorting JS -->
@@ -595,13 +636,11 @@
     <button class="back-btn" id="back-btn">← BACK TO HEATMAP</button>
     
     <div class="profile-header">
-      <div>
-        <div class="profile-subtitle" id="prof-type">EQUITY TELEMETRY & ORDER BOOK</div>
-        <div class="profile-title" id="prof-title">AAPL - APPLE INC</div>
-      </div>
-      <div style="text-align:right;">
-        <div style="font-size:1.3rem; font-weight:bold; color:var(--text-bright);" id="prof-last">0.00</div>
-        <div style="font-size:0.8rem;" id="prof-change">0.00 (0.00%)</div>
+      <div class="profile-subtitle" id="prof-type">EQUITY TELEMETRY & ORDER BOOK</div>
+      <div class="profile-title" id="prof-title">AAPL - APPLE INC</div>
+      <div class="profile-price-row">
+        <div style="font-size:1.2rem; font-weight:bold; color:var(--text-bright);" id="prof-last">0.00</div>
+        <div style="font-size:0.75rem; font-weight:bold;" id="prof-change">0.00 (0.00%)</div>
       </div>
     </div>
 
@@ -684,8 +723,8 @@
 
   <!-- Terminal Log Console -->
   <div class="console-box" id="console-log">
-[SYSTEM] Trillionaire Terminal v3.8 initialized.
-[SYSTEM] Direct Yahoo Finance API live search active.
+[SYSTEM] Trillionaire Terminal v3.9 initialized.
+[SYSTEM] Responsive mobile container & layout locked.
   </div>
 
   <script>
@@ -717,7 +756,7 @@
     ];
 
     let assetDataCache = {};
-    let currentFontSize = 14;
+    let currentFontSize = 13;
 
     const themes = ['mono', 'inverted', 'green', 'green-inverted', 'amber', 'blue', 'red', 'orange', 'mauve', 'blacked-out'];
     const themeLabels = ['MONO', 'INVERTED', 'GREEN', 'GREEN INV', 'AMBER', 'BLUE', 'RED', 'ORANGE', 'MAUVE', 'BLACKED-OUT'];
@@ -731,7 +770,6 @@
       consoleBox.scrollTop = consoleBox.scrollHeight;
     }
 
-    /* Military Time (24-Hour Format: HH:MM:SS) */
     function updateClocks() {
       const now = new Date();
       const utcStr = now.toLocaleTimeString('en-GB', { timeZone: 'UTC', hour12: false }) + ' UTC';
@@ -742,7 +780,7 @@
         localTz = 'LOCAL';
       }
       const locStr = now.toLocaleTimeString('en-GB', { hour12: false }) + ` (${localTz})`;
-      document.getElementById('clock-display').innerHTML = `UTC: ${utcStr}<br>LOC: ${locStr}`;
+      document.getElementById('clock-display').innerHTML = `UTC: ${utcStr} | LOC: ${locStr}`;
     }
     setInterval(updateClocks, 1000);
     updateClocks();
@@ -756,14 +794,14 @@
     });
 
     document.getElementById('font-inc-btn').addEventListener('click', () => {
-      if (currentFontSize < 18) {
+      if (currentFontSize < 16) {
         currentFontSize += 1;
         document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
       }
     });
 
     document.getElementById('font-dec-btn').addEventListener('click', () => {
-      if (currentFontSize > 11) {
+      if (currentFontSize > 10) {
         currentFontSize -= 1;
         document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
       }
@@ -830,9 +868,9 @@
     }
 
     async function buildHeatmap() {
-      logToTerminal('Scanning equity pool and computing real-time market cap rankings...');
+      logToTerminal('Scanning equity pool and computing market cap rankings...');
       const grid = document.getElementById('heatmap-grid');
-      grid.innerHTML = '<div style="font-size:0.7rem; color:var(--text-dim); padding:8px;">Sorting live market caps...</div>';
+      grid.innerHTML = '<div style="font-size:0.65rem; color:var(--text-dim); padding:6px;">Sorting live market caps...</div>';
 
       let evaluatedAssets = [];
 
@@ -918,7 +956,7 @@
         card.addEventListener('click', () => loadAsset(item.ticker));
         grid.appendChild(card);
       }
-      logToTerminal('Top 20 dynamic market cap heatmap successfully rendered.');
+      logToTerminal('Top 20 heatmap rendered successfully.');
     }
 
     async function loadIndexProfile(symbol, indexName, fallbackPrice) {
@@ -1000,28 +1038,28 @@
       document.getElementById('r-ytd').className = `return-val ${ytdPct >= 0 ? 'positive' : 'negative'}`;
     }
 
-    async function loadAsset(ticker) {
-      ticker = ticker.toUpperCase().trim();
-      logToTerminal(`Fetching telemetry profile for ${ticker}...`);
+    async function loadAsset(rawTicker) {
+      const ticker = rawTicker.toUpperCase().trim();
+      logToTerminal(`Fetching profile for ${ticker}...`);
 
       document.getElementById('heatmap-view').style.display = 'none';
       document.getElementById('profile-view').style.display = 'block';
 
-      let price = 100.00;
-      let prevClose = 98.00;
-      let pct = 1.00;
-      let volume = '35,420,100';
-      let openInterest = '112,500';
+      let price = 125.00;
+      let prevClose = 123.00;
+      let pct = 1.62;
+      let volume = '28,400,100';
+      let openInterest = '95,400';
       let volatility = '18.4% (MODERATE)';
-      let hi52 = '150.50';
-      let lo52 = '75.20';
+      let hi52 = '185.00';
+      let lo52 = '82.50';
       let earnings = 'NOV 15, 2026';
-      let capFormatted = '$500.0B';
-      let peRatio = '28.4';
-      let divYield = '1.15%';
-      let betaVal = '1.12';
-      let insiderHolder = 'Executive Management (4.2%)';
-      let instHolder = 'Vanguard Group (7.5%)';
+      let capFormatted = '$450.0B';
+      let peRatio = '26.8';
+      let divYield = '1.20%';
+      let betaVal = '1.10';
+      let insiderHolder = 'Executive Management (3.5%)';
+      let instHolder = 'Vanguard Group (8.1%)';
       let corpName = `${ticker} CORPORATION`;
 
       if (assetDataCache[ticker]) {
@@ -1054,7 +1092,7 @@
             price = meta.regularMarketPrice;
             prevClose = meta.chartPreviousClose || meta.previousClose || price;
             pct = ((price - prevClose) / prevClose) * 100;
-            volume = (meta.regularMarketVolume || 35000000).toLocaleString();
+            volume = (meta.regularMarketVolume || 30000000).toLocaleString();
             hi52 = (meta.fiftyTwoWeekHigh || price * 1.22).toFixed(2);
             lo52 = (meta.fiftyTwoWeekLow || price * 0.78).toFixed(2);
           }
