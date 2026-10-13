@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#000000">
-  <title>TRILLIONAIRE TERMINAL // MS-DOS v4.21</title>
+  <title>TRILLIONAIRE TERMINAL // MS-DOS v4.22</title>
   <style>
     :root {
       /* Classic MS-DOS Black & White (Default) */
@@ -506,16 +506,19 @@
     .positive { color: var(--accent-positive) !important; }
     .negative { color: var(--accent-negative) !important; }
 
+    /* Fixed console logger box styling with proper internal padding, margin, and border separation */
     .terminal-console-log {
       background: var(--bg-card);
       color: var(--text-main);
       border: 1px dashed var(--border-accent);
-      padding: 12px;
+      padding: 16px;
+      margin-top: 24px;
+      margin-bottom: 20px;
       font-size: 0.75rem;
-      margin-top: 16px;
-      max-height: 140px;
+      max-height: 160px;
       overflow-y: auto;
       box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+      line-height: 1.6;
     }
 
     @media (max-width: 600px) {
@@ -529,7 +532,7 @@
   <header>
     <div class="brand-group">
       <div class="dos-logo">C:\></div>
-      <div class="brand-title">TRILLIONAIRE TERMINAL v4.21</div>
+      <div class="brand-title">TRILLIONAIRE TERMINAL v4.22</div>
     </div>
     <div class="header-controls">
       <select id="theme-select" class="dos-select" title="Select Theme">
@@ -602,6 +605,7 @@
     </div>
   </div>
 
+  <!-- Console Log Box with fixed padding and border collision avoidance -->
   <div class="terminal-console-log" id="terminal-log">
     [00:00:00] SYSTEM INITIALIZED. CONNECTED TO SECURE CORS PROXIES & LIVE JSON STREAMS. READY.
   </div>
