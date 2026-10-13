@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>TRILLIONAIRE TERMINAL / v2.5</title>
+  <title>TRILLIONAIRE TERMINAL / v2.6</title>
   <style>
     :root {
       --bg-main: #000000;
@@ -631,13 +631,13 @@
 
   <!-- Terminal Log Console -->
   <div class="console-box" id="console-log">
-[SYSTEM] Trillionaire Terminal v2.5 initialized.
+[SYSTEM] Trillionaire Terminal v2.6 initialized.
 [SYSTEM] Querying live financial telemetry streams...
   </div>
 
   <script>
-    /* Pool of major US equities to dynamically query and rank by real-time market cap */
-    let candidateTickers = [
+    /* Pool of major US equities */
+    const candidateTickers = [
       { ticker: "AAPL", name: "Apple Inc." },
       { ticker: "MSFT", name: "Microsoft Corp." },
       { ticker: "NVDA", name: "NVIDIA Corp." },
@@ -657,7 +657,7 @@
       { ticker: "NFLX", name: "Netflix Inc." },
       { ticker: "PG", name: "Procter & Gamble" },
       { ticker: "JNJ", name: "Johnson & Johnson" },
-      { ticker: "COST", name: "Costco Wholesale",
+      { ticker: "COST", name: "Costco Wholesale" },
       { ticker: "HD", name: "Home Depot" },
       { ticker: "BAC", name: "Bank of America" },
       { ticker: "AMD", name: "Advanced Micro Devices" },
@@ -717,7 +717,7 @@
       }
     });
 
-    /* Fetch Market Indices */
+    /* Fetch Market Indices with CORS proxy fallback */
     async function fetchIndices() {
       const indices = [
         { symbol: '^DJI', id: 'DJI' },
@@ -727,8 +727,11 @@
       ];
 
       for (let idx of indices) {
+        let success = false;
+        const url = `https://query1.finance.yahoo.com/v8/finance/chart/${idx.symbol}?interval=1d&range=1d`;
+        
         try {
-          const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${idx.symbol}?interval=1d&range=1d`);
+          const res = await fetch(url);
           if (res.ok) {
             const data = await res.json();
             const meta = data.chart.result[0].meta;
@@ -741,10 +744,31 @@
             const chEl = document.getElementById(`idx-${idx.id}-ch`);
             chEl.innerText = `${change >= 0 ? '+' : ''}${change.toFixed(2)} (${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%)`;
             chEl.className = `index-change ${change >= 0 ? 'positive' : 'negative'}`;
-          } else {
-            throw new Error('API limit');
+            success = true;
           }
         } catch (e) {
+          // Try CORS proxy fallback if direct fetch blocked
+          try {
+            const proxyRes = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+            if (proxyRes.ok) {
+              const proxyData = await proxyRes.json();
+              const data = JSON.parse(proxyData.contents);
+              const meta = data.chart.result[0].meta;
+              const price = meta.regularMarketPrice;
+              const prevClose = meta.chartPreviousClose || meta.previousClose;
+              const change = price - prevClose;
+              const pct = (change / prevClose) * 100;
+
+              document.getElementById(`idx-${idx.id}`).innerText = price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+              const chEl = document.getElementById(`idx-${idx.id}-ch`);
+              chEl.innerText = `${change >= 0 ? '+' : ''}${change.toFixed(2)} (${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%)`;
+              chEl.className = `index-change ${change >= 0 ? 'positive' : 'negative'}`;
+              success = true;
+            }
+          } catch(err) {}
+        }
+
+        if (!success) {
           const base = idx.id === 'DJI' ? 43250 : idx.id === 'IXIC' ? 18900 : idx.id === 'SPX' ? 5850 : 2240;
           const pct = (Math.sin(Date.now() / 10000 + idx.symbol.length) * 0.8);
           const price = base * (1 + pct / 100);
@@ -758,36 +782,41 @@
       }
     }
 
-    /* Dynamically Fetch, Rank, and Build Top 20 Market Cap Heatmap */
+    /* Build Heatmap with robust fallback */
     async function buildHeatmap() {
-      logToTerminal('Computing live market capitalization rankings across US equities...');
+      logToTerminal('Computing dynamic market capitalization rankings across US equities...');
       const grid = document.getElementById('heatmap-grid');
       grid.innerHTML = '<div style="font-size:0.75rem; color:var(--text-dim); padding:10px;">Pulling live market caps & telemetry...</div>';
 
       let evaluatedAssets = [];
 
-      // Fetch live price and estimate/pull cap metrics for candidate pool
       for (let item of candidateTickers) {
         let price = 100 + (Math.abs(item.ticker.split('').reduce((acc,c)=>acc+c.charCodeAt(0),0)) % 400);
         let pct = (Math.sin(item.ticker.length * 3 + Date.now() / 20000) * 2.5);
-        let calculatedCapNum = 500 + (Math.abs(item.ticker.charCodeAt(0)) * 40); // default fallback weight
+        let calculatedCapNum = 500 + (Math.abs(item.ticker.charCodeAt(0)) * 40);
 
         try {
-          const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${item.ticker}?interval=1d&range=1d`);
+          const url = `https://query1.finance.yahoo.com/v8/finance/chart/${item.ticker}?interval=1d&range=1d`;
+          let res = await fetch(url);
+          if (!res.ok) {
+            const proxyRes = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+            if (proxyRes.ok) {
+              const proxyData = await proxyRes.json();
+              res = { ok: true, json: async () => JSON.parse(proxyData.contents) };
+            }
+          }
           if (res.ok) {
             const data = await res.json();
             const meta = data.chart.result[0].meta;
             price = meta.regularMarketPrice || price;
             const prev = meta.chartPreviousClose || meta.previousClose;
             pct = ((price - prev) / prev) * 100;
-            
             if (meta.regularMarketVolume) {
-              calculatedCapNum = price * (meta.regularMarketVolume * 15); // Dynamic market cap weighting approximation
+              calculatedCapNum = price * (meta.regularMarketVolume * 15);
             }
           }
         } catch(e) {}
 
-        // Specific overrides for mega-caps to ensure accurate ranking sorting
         const baselineCaps = { "AAPL": 3450, "MSFT": 3280, "NVDA": 3120, "GOOGL": 2150, "AMZN": 2020, "META": 1340, "BRK-B": 980, "LLY": 890, "AVGO": 780, "TSLA": 750, "JPM": 610, "WMT": 570, "XOM": 530, "V": 510, "UNH": 490, "MA": 440, "NFLX": 410, "PG": 400, "JNJ": 390, "COST": 380, "HD": 370, "BAC": 320, "AMD": 280, "ORCL": 340 };
         if (baselineCaps[item.ticker]) {
           calculatedCapNum = baselineCaps[item.ticker] * 1000;
@@ -803,10 +832,7 @@
         });
       }
 
-      // Sort descending by calculated market cap
       evaluatedAssets.sort((a, b) => b.capNum - a.capNum);
-
-      // Select top 20
       const top20 = evaluatedAssets.slice(0, 20);
       grid.innerHTML = '';
 
@@ -874,7 +900,15 @@
       const sentimentState = sentimentScore >= 52 ? 'BULLISH' : (sentimentScore < 45 ? 'BEARISH' : 'NEUTRAL');
 
       try {
-        const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=1mo`);
+        const url = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=1mo`;
+        let res = await fetch(url);
+        if (!res.ok) {
+          const proxyRes = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+          if (proxyRes.ok) {
+            const proxyData = await proxyRes.json();
+            res = { ok: true, json: async () => JSON.parse(proxyData.contents) };
+          }
+        }
         if (res.ok) {
           const data = await res.json();
           const meta = data.chart.result[0].meta;
@@ -954,4 +988,5 @@
   </script>
 </body>
 </html>
+
 
