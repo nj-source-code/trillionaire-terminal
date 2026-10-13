@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>TRILLIONAIRE TERMINAL // DOS v4.3</title>
+  <title>TRILLIONAIRE TERMINAL // DOS v4.5</title>
   <style>
     :root {
       --bg-main: #000000;
@@ -24,8 +24,7 @@
       --accent-green: #55ff55;
       --highlight-bg: #1c1c1c;
       --version-color: #3366ff;
-      --heat-pos-rgb: 46, 204, 113;
-      --heat-neg-rgb: 231, 76, 60;
+      --heat-base-rgb: 255, 255, 255;
       --font-mono: 'Courier New', Courier, monospace;
       --font-size: 15px;
     }
@@ -46,8 +45,7 @@
       --accent-green: #008800;
       --highlight-bg: #d9d9d9;
       --version-color: #1a44cc;
-      --heat-pos-rgb: 0, 136, 0;
-      --heat-neg-rgb: 204, 0, 0;
+      --heat-base-rgb: 0, 0, 0;
     }
 
     [data-theme="green"] {
@@ -66,8 +64,7 @@
       --accent-green: #2ecc71;
       --highlight-bg: #0d381b;
       --version-color: #3377ff;
-      --heat-pos-rgb: 88, 214, 141;
-      --heat-neg-rgb: 231, 76, 60;
+      --heat-base-rgb: 46, 204, 113;
     }
 
     [data-theme="green-inverted"] {
@@ -86,8 +83,7 @@
       --accent-green: #020804;
       --highlight-bg: #229954;
       --version-color: #1a44cc;
-      --heat-pos-rgb: 0, 51, 0;
-      --heat-neg-rgb: 139, 0, 0;
+      --heat-base-rgb: 2, 8, 4;
     }
 
     [data-theme="amber"] {
@@ -106,8 +102,7 @@
       --accent-green: #27ae60;
       --highlight-bg: #332205;
       --version-color: #3377ff;
-      --heat-pos-rgb: 39, 174, 96;
-      --heat-neg-rgb: 192, 57, 43;
+      --heat-base-rgb: 243, 156, 18;
     }
 
     [data-theme="blue"] {
@@ -126,8 +121,7 @@
       --accent-green: #2ecc71;
       --highlight-bg: #103152;
       --version-color: #6699ff;
-      --heat-pos-rgb: 46, 204, 113;
-      --heat-neg-rgb: 231, 76, 60;
+      --heat-base-rgb: 52, 152, 219;
     }
 
     [data-theme="red"] {
@@ -146,8 +140,7 @@
       --accent-green: #2ecc71;
       --highlight-bg: #4a1010;
       --version-color: #3377ff;
-      --heat-pos-rgb: 46, 204, 113;
-      --heat-neg-rgb: 231, 76, 60;
+      --heat-base-rgb: 231, 76, 60;
     }
 
     [data-theme="orange"] {
@@ -166,8 +159,7 @@
       --accent-green: #2ecc71;
       --highlight-bg: #4a2810;
       --version-color: #3377ff;
-      --heat-pos-rgb: 46, 204, 113;
-      --heat-neg-rgb: 231, 76, 60;
+      --heat-base-rgb: 230, 126, 34;
     }
 
     [data-theme="mauve"] {
@@ -186,8 +178,7 @@
       --accent-green: #2ecc71;
       --highlight-bg: #322537;
       --version-color: #3377ff;
-      --heat-pos-rgb: 46, 204, 113;
-      --heat-neg-rgb: 231, 76, 60;
+      --heat-base-rgb: 212, 181, 223;
     }
 
     [data-theme="blacked-out"] {
@@ -206,8 +197,7 @@
       --accent-green: #33aa33;
       --highlight-bg: #0f0f0f;
       --version-color: #3366ff;
-      --heat-pos-rgb: 51, 170, 51;
-      --heat-neg-rgb: 170, 51, 51;
+      --heat-base-rgb: 136, 136, 136;
     }
 
     * {
@@ -492,10 +482,10 @@
       gap: 8px;
     }
 
-    .key-gradient {
+    .key-gradient-shade {
       flex: 1;
       height: 10px;
-      background: linear-gradient(to right, rgb(var(--heat-neg-rgb)), rgb(var(--heat-pos-rgb)));
+      background: linear-gradient(to right, rgba(var(--heat-base-rgb), 0.75), rgba(var(--heat-base-rgb), 0.08));
       border-radius: 2px;
       border: 1px solid var(--border-color);
     }
@@ -620,7 +610,7 @@
 
   <header>
     <div>
-      <div class="brand-title">TRILLIONAIRE TERMINAL <span class="version-badge">| v4.3</span></div>
+      <div class="brand-title">TRILLIONAIRE TERMINAL <span class="version-badge">| v4.5</span></div>
     </div>
     <div class="clock-display" id="clock-display">
       UTC: 00:00:00 | LOC: 00:00:00
@@ -686,15 +676,15 @@
       </div>
     </div>
     <div class="heatmap-grid" id="heatmap-grid">
-      <!-- Generated via dynamic cap sorting & theme-agnostic semantic variable heatmap JS -->
+      <!-- Generated via dynamic cap sorting & monochrome/theme shading JS -->
     </div>
     <div class="heatmap-key">
       <div class="heatmap-key-row">
-        <span>DECREASE INTENSITY (BEARISH)</span>
-        <span>INCREASE INTENSITY (BULLISH)</span>
+        <span>NEGATIVE (DARKER SHADE)</span>
+        <span>POSITIVE (LIGHTER SHADE)</span>
       </div>
       <div class="heatmap-key-row">
-        <div class="key-gradient"></div>
+        <div class="key-gradient-shade"></div>
       </div>
     </div>
   </div>
@@ -793,8 +783,8 @@
 
   <!-- Terminal Log Console -->
   <div class="console-box" id="console-log">
-[SYSTEM] Trillionaire Terminal v4.3 initialized.
-[SYSTEM] Theme-agnostic semantic heatmap color variables active.
+[SYSTEM] Trillionaire Terminal v4.5 initialized.
+[SYSTEM] Shading intensity heatmap (Lighter = Positive, Darker = Negative) active.
   </div>
 
   <script>
@@ -953,7 +943,7 @@
 
     async function buildHeatmap() {
       const grid = document.getElementById('heatmap-grid');
-      grid.innerHTML = `<div style="font-size:0.75rem; color:var(--text-dim); padding:10px;">Computing ${currentCycle.toUpperCase()} heatmap intensities...</div>`;
+      grid.innerHTML = `<div style="font-size:0.75rem; color:var(--text-dim); padding:10px;">Computing ${currentCycle.toUpperCase()} shading intensities...</div>`;
 
       let evaluatedAssets = [];
 
@@ -1021,15 +1011,16 @@
         const card = document.createElement('div');
         card.className = 'heat-card';
         
+        // Shading intensity: Lighter shading for positive values, darker shading for negative values
         const absVal = Math.min(Math.abs(item.cyclePct), 10);
-        const alpha = Math.max(0.12, (absVal / 10) * 0.75).toFixed(2);
+        const alpha = Math.max(0.06, (absVal / 10) * 0.65);
         
-        if (item.cyclePct > 0) {
-          card.style.backgroundColor = `rgba(var(--heat-pos-rgb), ${alpha})`;
-        } else if (item.cyclePct < 0) {
-          card.style.backgroundColor = `rgba(var(--heat-neg-rgb), ${alpha})`;
+        if (item.cyclePct >= 0) {
+          // Positive values get lighter shading (additive alpha over card background)
+          card.style.backgroundColor = `rgba(var(--heat-base-rgb), ${(alpha * 0.7).toFixed(2)})`;
         } else {
-          card.style.backgroundColor = 'var(--bg-card)';
+          // Negative values get darker shading (deeper opacity / darkened blend)
+          card.style.backgroundColor = `rgba(0, 0, 0, ${(0.2 + alpha * 0.8).toFixed(2)})`;
         }
 
         card.innerHTML = `
@@ -1260,5 +1251,4 @@
   </script>
 </body>
 </html>
-
 
