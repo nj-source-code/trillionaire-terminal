@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>TRILLIONAIRE TERMINAL // DOS v3.6</title>
+  <title>TRILLIONAIRE TERMINAL // DOS v3.7</title>
   <style>
     :root {
       --bg-main: #000000;
@@ -507,8 +507,7 @@
 
   <header>
     <div>
-      <div class="brand-title">TRILLIONAIRE TERMINAL // DOS</div>
-      <div style="font-size:0.7rem; color:var(--text-dim);">DYNAMIC MARKET CAP SURVEILLANCE & HEATMAP</div>
+      <div class="brand-title">TRILLIONAIRE TERMINAL v3.7</div>
     </div>
     <div class="clock-display" id="clock-display">
       UTC: 00:00:00 | LOC: 00:00:00
@@ -666,8 +665,8 @@
 
   <!-- Terminal Log Console -->
   <div class="console-box" id="console-log">
-[SYSTEM] Trillionaire Terminal v3.6 initialized.
-[SYSTEM] Index routing & live cap scan engine active.
+[SYSTEM] Trillionaire Terminal v3.7 initialized.
+[SYSTEM] Dynamic real-time market API lookup active.
   </div>
 
   <script>
@@ -818,9 +817,8 @@
       let evaluatedAssets = [];
 
       for (let item of EQUITY_POOL) {
-        let price = 100 + (Math.abs(item.ticker.split('').reduce((acc,c)=>acc+c.charCodeAt(0),0)) % 350) + Math.random() * 5;
+        let price = 150 + (Math.abs(item.ticker.split('').reduce((acc,c)=>acc+c.charCodeAt(0),0)) % 250);
         let pct = (Math.sin(item.ticker.length * 3 + Date.now() / 20000) * 2.2);
-        
         let calculatedCapB = item.baseCapT ? item.baseCapT * 1000 : item.baseCapB;
 
         try {
@@ -836,11 +834,10 @@
           if (res.ok) {
             const data = await res.json();
             const meta = data.chart.result[0].meta;
-            price = meta.regularMarketPrice || price;
-            const prev = meta.chartPreviousClose || meta.previousClose;
-            pct = ((price - prev) / prev) * 100;
-
-            if (meta.regularMarketVolume) {
+            if (meta.regularMarketPrice) {
+              price = meta.regularMarketPrice;
+              const prev = meta.chartPreviousClose || meta.previousClose || price;
+              pct = ((price - prev) / prev) * 100;
               calculatedCapB = calculatedCapB * (1 + (pct / 300));
             }
           }
@@ -849,7 +846,7 @@
         const isTrillion = calculatedCapB >= 1000;
         const capFormatted = isTrillion ? `$${(calculatedCapB / 1000).toFixed(2)}T` : `$${calculatedCapB.toFixed(0)}B`;
 
-        evaluatedAssets.push({
+        const assetObj = {
           ticker: item.ticker,
           name: item.name,
           price: price,
@@ -861,7 +858,10 @@
           beta: item.beta,
           insider: item.insider,
           inst: item.inst
-        });
+        };
+
+        evaluatedAssets.push(assetObj);
+        assetDataCache[item.ticker] = assetObj;
       }
 
       evaluatedAssets.sort((a, b) => b.capValB - a.capValB);
@@ -869,8 +869,6 @@
       grid.innerHTML = '';
 
       for (let item of top20) {
-        assetDataCache[item.ticker] = item;
-
         const card = document.createElement('div');
         card.className = 'heat-card';
         
@@ -982,26 +980,35 @@
       document.getElementById('heatmap-view').style.display = 'none';
       document.getElementById('profile-view').style.display = 'block';
 
-      let cached = assetDataCache[ticker] || {
-        name: `${ticker} CORPORATION`,
-        price: 150.00,
-        pct: 1.25,
-        capFormatted: '$1.20T',
-        pe: '28.4',
-        div: '1.15%',
-        beta: '1.12',
-        insider: 'Executive Management (4.2%)',
-        inst: 'Vanguard Group (7.5%)'
-      };
-
-      let price = cached.price;
-      let prevClose = price / (1 + (cached.pct / 100));
-      let volume = '42,105,820';
-      let openInterest = '128,450';
+      let price = 150.00;
+      let prevClose = 148.00;
+      let pct = 1.35;
+      let volume = '35,420,100';
+      let openInterest = '112,500';
       let volatility = '18.4% (MODERATE)';
-      let hi52 = (price * 1.22).toFixed(2);
-      let lo52 = (price * 0.78).toFixed(2);
-      let earnings = 'NOV 12, 2026';
+      let hi52 = '210.50';
+      let lo52 = '95.20';
+      let earnings = 'NOV 15, 2026';
+      let capFormatted = '$500.0B';
+      let peRatio = '28.4';
+      let divYield = '1.15%';
+      let betaVal = '1.12';
+      let insiderHolder = 'Executive Management (4.2%)';
+      let instHolder = 'Vanguard Group (7.5%)';
+      let corpName = `${ticker} CORPORATION`;
+
+      if (assetDataCache[ticker]) {
+        price = assetDataCache[ticker].price;
+        prevClose = price / (1 + (assetDataCache[ticker].pct / 100));
+        pct = assetDataCache[ticker].pct;
+        capFormatted = assetDataCache[ticker].capFormatted;
+        peRatio = assetDataCache[ticker].pe;
+        divYield = assetDataCache[ticker].div;
+        betaVal = assetDataCache[ticker].beta;
+        insiderHolder = assetDataCache[ticker].insider;
+        instHolder = assetDataCache[ticker].inst;
+        corpName = assetDataCache[ticker].name;
+      }
 
       try {
         const url = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=1mo`;
@@ -1016,19 +1023,21 @@
         if (res.ok) {
           const data = await res.json();
           const meta = data.chart.result[0].meta;
-          price = meta.regularMarketPrice || price;
-          prevClose = meta.chartPreviousClose || meta.previousClose || prevClose;
-          volume = (meta.regularMarketVolume || 35000000).toLocaleString();
-          hi52 = (meta.fiftyTwoWeekHigh || price * 1.22).toFixed(2);
-          lo52 = (meta.fiftyTwoWeekLow || price * 0.78).toFixed(2);
+          if (meta.regularMarketPrice) {
+            price = meta.regularMarketPrice;
+            prevClose = meta.chartPreviousClose || meta.previousClose || price;
+            pct = ((price - prevClose) / prevClose) * 100;
+            volume = (meta.regularMarketVolume || 35000000).toLocaleString();
+            hi52 = (meta.fiftyTwoWeekHigh || price * 1.22).toFixed(2);
+            lo52 = (meta.fiftyTwoWeekLow || price * 0.78).toFixed(2);
+          }
         }
       } catch(e) {}
 
       const change = price - prevClose;
-      const pct = (change / prevClose) * 100;
 
       document.getElementById('prof-type').innerText = ticker.includes('=F') || ticker.includes('^') ? 'FUTURES / MACRO RATE TELEMETRY' : 'EQUITY TELEMETRY & ORDER BOOK';
-      document.getElementById('prof-title').innerText = `${ticker} — ${cached.name.toUpperCase()}`;
+      document.getElementById('prof-title').innerText = `${ticker} — ${corpName.toUpperCase()}`;
 
       document.getElementById('prof-last').innerText = `$${price.toFixed(2)}`;
       const chEl = document.getElementById('prof-change');
@@ -1038,15 +1047,15 @@
       document.getElementById('m-vol').innerText = volume;
       document.getElementById('m-oi').innerText = openInterest;
       document.getElementById('m-bidask').innerText = `$${(price*0.999).toFixed(2)} / $${(price*1.001).toFixed(2)}`;
-      document.getElementById('m-cap').innerText = cached.capFormatted;
-      document.getElementById('m-pe').innerText = cached.pe;
-      document.getElementById('m-div').innerText = cached.div;
-      document.getElementById('m-beta').innerText = cached.beta;
+      document.getElementById('m-cap').innerText = capFormatted;
+      document.getElementById('m-pe').innerText = peRatio;
+      document.getElementById('m-div').innerText = divYield;
+      document.getElementById('m-beta').innerText = betaVal;
       document.getElementById('m-volatility').innerText = volatility;
       document.getElementById('m-52hihi').innerText = `$${hi52} / $${lo52}`;
       document.getElementById('m-earnings').innerText = earnings;
-      document.getElementById('m-insider').innerText = cached.insider;
-      document.getElementById('m-inst').innerText = cached.inst;
+      document.getElementById('m-insider').innerText = insiderHolder;
+      document.getElementById('m-inst').innerText = instHolder;
       
       const hashVal = ticker.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
       const sentimentScore = 35 + (hashVal % 45);
