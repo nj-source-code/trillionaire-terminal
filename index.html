@@ -7,10 +7,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#000000">
-  <title>TRILLIONAIRE TERMINAL // MS-DOS v4.22</title>
+  <title>TRILLIONAIRE TERMINAL // MS-DOS v4.23</title>
   <style>
     :root {
-      /* Classic MS-DOS Black & White (Default) */
       --bg-main: #000000;
       --bg-card: #050505;
       --bg-card-hover: #111111;
@@ -371,19 +370,20 @@
 
     .heatmap-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 8px;
     }
 
     .heatmap-tile {
-      padding: 12px;
+      padding: 10px;
       border: 1px solid var(--border-color);
       cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 85px;
+      min-height: 90px;
       transition: all 0.1s;
+      overflow: hidden;
     }
 
     .heatmap-tile:hover {
@@ -392,38 +392,50 @@
       z-index: 10;
     }
 
+    .tile-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 4px;
+    }
+
     .tile-ticker {
       font-weight: bold;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: var(--text-bright);
+      white-space: nowrap;
     }
 
     .tile-cap {
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       color: var(--text-dim);
+      white-space: nowrap;
     }
 
     .tile-price-box {
       margin-top: 6px;
       display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1px;
     }
 
     .tile-price {
       font-size: 0.8rem;
       color: var(--text-main);
+      white-space: nowrap;
     }
 
     .tile-pct {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: bold;
+      white-space: nowrap;
     }
 
     .search-box-container {
       display: flex;
       gap: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     .dos-input {
@@ -506,7 +518,6 @@
     .positive { color: var(--accent-positive) !important; }
     .negative { color: var(--accent-negative) !important; }
 
-    /* Fixed console logger box styling with proper internal padding, margin, and border separation */
     .terminal-console-log {
       background: var(--bg-card);
       color: var(--text-main);
@@ -523,7 +534,7 @@
 
     @media (max-width: 600px) {
       .returns-box { grid-template-columns: 1fr; }
-      .heatmap-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+      .heatmap-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
     }
   </style>
 </head>
@@ -532,7 +543,7 @@
   <header>
     <div class="brand-group">
       <div class="dos-logo">C:\></div>
-      <div class="brand-title">TRILLIONAIRE TERMINAL v4.22</div>
+      <div class="brand-title">TRILLIONAIRE TERMINAL v4.23</div>
     </div>
     <div class="header-controls">
       <select id="theme-select" class="dos-select" title="Select Theme">
@@ -578,7 +589,7 @@
   <div id="view-ticker" class="view-section">
     <div class="dos-box">
       <div class="dos-box-title">UNIVERSAL TICKER LOOKUP (STOCKS, FUTURES, RATES, CRYPTO)</div>
-      <div class="search-box-container" style="margin-bottom: 10px;">
+      <div class="search-box-container">
         <input type="text" id="ticker-search-input" class="dos-input" placeholder="ENTER TICKER OR ASSET (e.g. AAPL, ES=F, TNX, BTC, MSFT)...">
         <button class="dos-btn" id="ticker-search-btn" style="padding: 10px 20px; font-weight: bold;">EXECUTE</button>
       </div>
@@ -605,7 +616,6 @@
     </div>
   </div>
 
-  <!-- Console Log Box with fixed padding and border collision avoidance -->
   <div class="terminal-console-log" id="terminal-log">
     [00:00:00] SYSTEM INITIALIZED. CONNECTED TO SECURE CORS PROXIES & LIVE JSON STREAMS. READY.
   </div>
@@ -678,7 +688,7 @@
         let bgStyle = '';
         const isPos = item.change >= 0;
         const absVal = Math.min(Math.abs(item.change), 5);
-        const alpha = 0.1 + (absVal / 5) * 0.35;
+        const alpha = 0.12 + (absVal / 5) * 0.35;
         
         const currentTheme = document.documentElement.getAttribute('data-theme') || 'classic';
         let baseColor = '255, 255, 255';
@@ -695,12 +705,12 @@
 
         container.innerHTML += `
           <div class="heatmap-tile" style="${bgStyle}" onclick="openTickerDetail('${item.symbol}')">
-            <div>
-              <div class="tile-ticker">${item.symbol}</div>
-              <div class="tile-cap">CAP: $${item.cap}B</div>
+            <div class="tile-top-row">
+              <span class="tile-ticker">${item.symbol}</span>
+              <span class="tile-cap">\$${item.cap}B</span>
             </div>
             <div class="tile-price-box">
-              <span class="tile-price">$${item.price.toFixed(2)}</span>
+              <span class="tile-price">\$${item.price.toFixed(2)}</span>
               <span class="tile-pct ${isPos ? 'positive' : 'negative'}">${isPos ? '+' : ''}${item.change}%</span>
             </div>
           </div>
@@ -765,7 +775,7 @@
           ask: currentPrice * 1.001,
           volume: meta.regularMarketVolume || Math.floor(Math.random() * 50000000 + 1000000),
           openInterest: Math.floor(Math.random() * 200000 + 5000),
-          marketCap: meta.marketCap ? `$${(meta.marketCap / 1e9).toFixed(2)}B` : '$450.0B',
+          marketCap: meta.marketCap ? `\$${(meta.marketCap / 1e9).toFixed(2)}B` : '$450.0B',
           peRatio: (Math.random() * 25 + 12).toFixed(2),
           divYield: (Math.random() * 3).toFixed(2) + '%',
           beta: (Math.random() * 0.8 + 0.6).toFixed(2),
@@ -825,7 +835,7 @@
             <div style="font-size:0.8rem; color:var(--text-dim);">REAL-TIME ORDER BOOK & CYCLE RETURN TELEMETRY</div>
           </div>
           <div style="text-align:right;">
-            <div style="font-size:1.4rem; font-weight:bold; color:var(--text-bright);">$${d.last.toFixed(2)}</div>
+            <div style="font-size:1.4rem; font-weight:bold; color:var(--text-bright);">\$${d.last.toFixed(2)}</div>
             <div style="font-size:0.75rem; color:var(--accent-positive);">SENTIMENT: ${d.sentiment}</div>
           </div>
         </div>
@@ -834,12 +844,12 @@
           <div>
             <div style="font-size:0.8rem; font-weight:bold; color:var(--text-bright); margin-bottom:8px;">MARKET & ORDER BOOK</div>
             <table class="metric-table">
-              <tr><th>BID / ASK</th><td>$${d.bid.toFixed(2)} / $${d.ask.toFixed(2)}</td></tr>
+              <tr><th>BID / ASK</th><td>\$${d.bid.toFixed(2)} / \$${d.ask.toFixed(2)}</td></tr>
               <tr><th>VOLUME</th><td>${d.volume.toLocaleString()}</td></tr>
               <tr><th>OPEN INTEREST</th><td>${d.openInterest.toLocaleString()}</td></tr>
               <tr><th>MARKET CAP</th><td>${d.marketCap}</td></tr>
-              <tr><th>52-WK HIGH</th><td>$${d.high52.toFixed(2)}</td></tr>
-              <tr><th>52-WK LOW</th><td>$${d.low52.toFixed(2)}</td></tr>
+              <tr><th>52-WK HIGH</th><td>\$${d.high52.toFixed(2)}</td></tr>
+              <tr><th>52-WK LOW</th><td>\$${d.low52.toFixed(2)}</td></tr>
               <tr><th>VOLATILITY (ATR)</th><td>${d.volatility}</td></tr>
             </table>
           </div>
@@ -862,19 +872,19 @@
           <div class="returns-box">
             <div class="return-card">
               <div class="return-label">THIS WEEK RETURN</div>
-              <div class="return-val positive">+$${d.weekRet.price} (${d.weekRet.pct})</div>
+              <div class="return-val positive">+ \$${d.weekRet.price} (${d.weekRet.pct})</div>
             </div>
             <div class="return-card">
               <div class="return-label">THIS MONTH RETURN</div>
-              <div class="return-val positive">+$${d.monthRet.price} (${d.monthRet.pct})</div>
+              <div class="return-val positive">+ \$${d.monthRet.price} (${d.monthRet.pct})</div>
             </div>
             <div class="return-card">
               <div class="return-label">THIS QUARTER RETURN</div>
-              <div class="return-val positive">+$${d.quarterRet.price} (${d.quarterRet.pct})</div>
+              <div class="return-val positive">+ \$${d.quarterRet.price} (${d.quarterRet.pct})</div>
             </div>
             <div class="return-card">
               <div class="return-label">YTD RETURN (JAN 1 TO DATE)</div>
-              <div class="return-val positive">+$${d.ytdRet.price} (${d.ytdRet.pct})</div>
+              <div class="return-val positive">+ \$${d.ytdRet.price} (${d.ytdRet.pct})</div>
             </div>
           </div>
         </div>
