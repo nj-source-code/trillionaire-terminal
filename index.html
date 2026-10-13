@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>TRILLIONAIRE TERMINAL // DOS v3.3</title>
+  <title>TRILLIONAIRE TERMINAL // DOS v3.4</title>
   <style>
     :root {
       --bg-main: #000000;
@@ -218,6 +218,14 @@
       padding: 10px;
       border-radius: 4px;
       text-align: center;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .index-box:hover {
+      border-color: var(--text-main);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
     }
 
     .index-name {
@@ -466,22 +474,22 @@
 
   <!-- Market Indices Ticker Bar -->
   <div class="indices-row" id="indices-bar">
-    <div class="index-box">
+    <div class="index-box" onclick="loadAsset('^DJI')">
       <div class="index-name">DOW JONES</div>
       <div class="index-val" id="idx-DJI">--</div>
       <div class="index-change" id="idx-DJI-ch">--</div>
     </div>
-    <div class="index-box">
+    <div class="index-box" onclick="loadAsset('^IXIC')">
       <div class="index-name">NASDAQ 100</div>
       <div class="index-val" id="idx-IXIC">--</div>
       <div class="index-change" id="idx-IXIC-ch">--</div>
     </div>
-    <div class="index-box">
+    <div class="index-box" onclick="loadAsset('^GSPC')">
       <div class="index-name">S&P 500</div>
       <div class="index-val" id="idx-SPX">--</div>
       <div class="index-change" id="idx-SPX-ch">--</div>
     </div>
-    <div class="index-box">
+    <div class="index-box" onclick="loadAsset('^RUT')">
       <div class="index-name">RUSSELL 2000</div>
       <div class="index-val" id="idx-RUT">--</div>
       <div class="index-change" id="idx-RUT-ch">--</div>
@@ -610,7 +618,7 @@
 
   <!-- Terminal Log Console -->
   <div class="console-box" id="console-log">
-[SYSTEM] Trillionaire Terminal v3.3 initialized.
+[SYSTEM] Trillionaire Terminal v3.4 initialized.
 [SYSTEM] Dynamic Market Cap Rank Engine active.
   </div>
 
@@ -952,4 +960,5 @@
   </script>
 </body>
 </html>
+
 
