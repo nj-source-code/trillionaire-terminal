@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>TRILLIONAIRE TERMINAL // DOS v3.9</title>
+  <title>TRILLIONAIRE TERMINAL // DOS v4.0</title>
   <style>
     :root {
       --bg-main: #000000;
@@ -23,7 +23,7 @@
       --accent-green: #55ff55;
       --highlight-bg: #1c1c1c;
       --font-mono: 'Courier New', Courier, monospace;
-      --font-size: 13px;
+      --font-size: 14px;
     }
 
     [data-theme="inverted"] {
@@ -64,13 +64,13 @@
       --bg-card-hover: #229954;
       --border-color: #196f3d;
       --border-accent: #145a2d;
-      --text-main: #020804;
-      --text-dim: #0b2612;
-      --text-muted: #145a2d;
+      --text-main: #00220a;
+      --text-dim: #053312;
+      --text-muted: #0b4519;
       --text-bright: #000000;
-      --accent-gold: #f1c40f;
-      --accent-red: #c0392b;
-      --accent-green: #020804;
+      --accent-gold: #fff066;
+      --accent-red: #8b0000;
+      --accent-green: #003300;
       --highlight-bg: #229954;
     }
 
@@ -157,17 +157,17 @@
     [data-theme="blacked-out"] {
       --bg-main: #000000;
       --bg-card: #000000;
-      --bg-card-hover: #0a0a0a;
-      --border-color: #1a1a1a;
-      --border-accent: #333333;
-      --text-main: #888888;
-      --text-dim: #555555;
-      --text-muted: #222222;
-      --text-bright: #cccccc;
-      --accent-gold: #ccaa00;
-      --accent-red: #aa3333;
-      --accent-green: #33aa33;
-      --highlight-bg: #0f0f0f;
+      --bg-card-hover: #0f0f0f;
+      --border-color: #222222;
+      --border-accent: #444444;
+      --text-main: #cccccc;
+      --text-dim: #888888;
+      --text-muted: #444444;
+      --text-bright: #ffffff;
+      --accent-gold: #ffcc00;
+      --accent-red: #ff4444;
+      --accent-green: #44ff44;
+      --highlight-bg: #151515;
     }
 
     * {
@@ -206,22 +206,24 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      gap: 6px;
+      gap: 4px;
     }
 
     .brand-title {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: bold;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       color: var(--text-bright);
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .version-badge {
       font-size: 0.7rem;
       color: var(--accent-gold);
       font-weight: bold;
-      margin-left: 4px;
+      margin-left: 3px;
     }
 
     .clock-display {
@@ -232,7 +234,7 @@
 
     .header-actions {
       display: flex;
-      gap: 4px;
+      gap: 3px;
       flex-shrink: 0;
     }
 
@@ -240,11 +242,12 @@
       background: var(--bg-card);
       color: var(--text-main);
       border: 1px solid var(--border-color);
-      padding: 4px 6px;
+      padding: 3px 5px;
       border-radius: 4px;
       font-family: var(--font-mono);
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .btn-header:hover {
@@ -460,10 +463,9 @@
 
     .profile-price-row {
       display: flex;
-      gap: 10px;
-      align-items: baseline;
+      flex-direction: column;
+      gap: 2px;
       width: 100%;
-      flex-wrap: wrap;
     }
 
     .metrics-grid {
@@ -567,7 +569,7 @@
 
   <header>
     <div class="header-top">
-      <div class="brand-title">TRILLIONAIRE TERMINAL <span class="version-badge">| v3.9</span></div>
+      <div class="brand-title">TRILLIONAIRE TERMINAL <span class="version-badge">| v4.0</span></div>
       <div class="header-actions">
         <button class="btn-header" id="font-dec-btn">A−</button>
         <button class="btn-header" id="font-inc-btn">A+</button>
@@ -723,8 +725,8 @@
 
   <!-- Terminal Log Console -->
   <div class="console-box" id="console-log">
-[SYSTEM] Trillionaire Terminal v3.9 initialized.
-[SYSTEM] Responsive mobile container & layout locked.
+[SYSTEM] Trillionaire Terminal v4.0 initialized.
+[SYSTEM] Full QA & layout optimization active.
   </div>
 
   <script>
@@ -756,7 +758,7 @@
     ];
 
     let assetDataCache = {};
-    let currentFontSize = 13;
+    let currentFontSize = 14;
 
     const themes = ['mono', 'inverted', 'green', 'green-inverted', 'amber', 'blue', 'red', 'orange', 'mauve', 'blacked-out'];
     const themeLabels = ['MONO', 'INVERTED', 'GREEN', 'GREEN INV', 'AMBER', 'BLUE', 'RED', 'ORANGE', 'MAUVE', 'BLACKED-OUT'];
@@ -794,14 +796,14 @@
     });
 
     document.getElementById('font-inc-btn').addEventListener('click', () => {
-      if (currentFontSize < 16) {
+      if (currentFontSize < 17) {
         currentFontSize += 1;
         document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
       }
     });
 
     document.getElementById('font-dec-btn').addEventListener('click', () => {
-      if (currentFontSize > 10) {
+      if (currentFontSize > 12) {
         currentFontSize -= 1;
         document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
       }
@@ -870,7 +872,7 @@
     async function buildHeatmap() {
       logToTerminal('Scanning equity pool and computing market cap rankings...');
       const grid = document.getElementById('heatmap-grid');
-      grid.innerHTML = '<div style="font-size:0.65rem; color:var(--text-dim); padding:6px;">Sorting live market caps...</div>';
+      grid.innerHTML = '<div style="font-size:0.7rem; color:var(--text-dim); padding:6px;">Sorting live market caps...</div>';
 
       let evaluatedAssets = [];
 
