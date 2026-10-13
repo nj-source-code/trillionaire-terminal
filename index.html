@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>TRILLIONAIRE TERMINAL // DOS v3.5</title>
+  <title>TRILLIONAIRE TERMINAL // DOS v3.6</title>
   <style>
     :root {
       --bg-main: #000000;
@@ -56,6 +56,22 @@
       --accent-red: #e74c3c;
       --accent-green: #2ecc71;
       --highlight-bg: #0d381b;
+    }
+
+    [data-theme="green-inverted"] {
+      --bg-main: #2ecc71;
+      --bg-card: #27ae60;
+      --bg-card-hover: #229954;
+      --border-color: #196f3d;
+      --border-accent: #145a2d;
+      --text-main: #020804;
+      --text-dim: #0b2612;
+      --text-muted: #145a2d;
+      --text-bright: #000000;
+      --accent-gold: #f1c40f;
+      --accent-red: #c0392b;
+      --accent-green: #020804;
+      --highlight-bg: #229954;
     }
 
     [data-theme="amber"] {
@@ -120,6 +136,38 @@
       --accent-red: #e74c3c;
       --accent-green: #2ecc71;
       --highlight-bg: #4a2810;
+    }
+
+    [data-theme="mauve"] {
+      --bg-main: #0d090e;
+      --bg-card: #161018;
+      --bg-card-hover: #241b27;
+      --border-color: #4a3b4f;
+      --border-accent: #7a5c85;
+      --text-main: #d4b5df;
+      --text-dim: #a482b2;
+      --text-muted: #594463;
+      --text-bright: #ebd4ff;
+      --accent-gold: #f1c40f;
+      --accent-red: #e74c3c;
+      --accent-green: #2ecc71;
+      --highlight-bg: #322537;
+    }
+
+    [data-theme="blacked-out"] {
+      --bg-main: #000000;
+      --bg-card: #000000;
+      --bg-card-hover: #0a0a0a;
+      --border-color: #1a1a1a;
+      --border-accent: #333333;
+      --text-main: #888888;
+      --text-dim: #555555;
+      --text-muted: #222222;
+      --text-bright: #cccccc;
+      --accent-gold: #ccaa00;
+      --accent-red: #aa3333;
+      --accent-green: #33aa33;
+      --highlight-bg: #0f0f0f;
     }
 
     * {
@@ -424,7 +472,7 @@
     .neutral { color: var(--text-bright); }
 
     .console-box {
-      background-color: #000000;
+      background-color: var(--bg-main);
       border: 1px dashed var(--border-accent);
       border-radius: 4px;
       padding: 10px;
@@ -618,7 +666,7 @@
 
   <!-- Terminal Log Console -->
   <div class="console-box" id="console-log">
-[SYSTEM] Trillionaire Terminal v3.5 initialized.
+[SYSTEM] Trillionaire Terminal v3.6 initialized.
 [SYSTEM] Index routing & live cap scan engine active.
   </div>
 
@@ -653,8 +701,8 @@
     let assetDataCache = {};
     let currentFontSize = 15;
 
-    const themes = ['mono', 'inverted', 'green', 'amber', 'blue', 'red', 'orange'];
-    const themeLabels = ['MONO', 'INVERTED', 'GREEN', 'AMBER', 'BLUE', 'RED', 'ORANGE'];
+    const themes = ['mono', 'inverted', 'green', 'green-inverted', 'amber', 'blue', 'red', 'orange', 'mauve', 'blacked-out'];
+    const themeLabels = ['MONO', 'INVERTED', 'GREEN', 'GREEN INV', 'AMBER', 'BLUE', 'RED', 'ORANGE', 'MAUVE', 'BLACKED-OUT'];
     let themeIdx = 0;
 
     function logToTerminal(msg) {
@@ -748,7 +796,6 @@
         chEl.innerText = `${change >= 0 ? '+' : ''}${change.toFixed(2)} (${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%)`;
         chEl.className = `index-change ${change >= 0 ? 'positive' : 'negative'}`;
 
-        // Cache index data for proper profile inspection
         assetDataCache[idx.symbol] = {
           name: idx.id === 'DJI' ? 'Dow Jones Industrial Average' : idx.id === 'IXIC' ? 'Nasdaq Composite Index' : idx.id === 'SPX' ? 'S&P 500 Index' : 'Russell 2000 Index',
           price: price,
