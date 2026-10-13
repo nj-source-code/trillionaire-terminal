@@ -2,11 +2,11 @@
 <html lang="en" data-theme="mono">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>TRILLIONAIRE TERMINAL // DOS v4.1</title>
+  <title>TRILLIONAIRE TERMINAL // DOS v4.2</title>
   <style>
     :root {
       --bg-main: #000000;
@@ -23,9 +23,9 @@
       --accent-red: #ff5555;
       --accent-green: #55ff55;
       --highlight-bg: #1c1c1c;
-      --version-color: #0044cc;
+      --version-color: #3366ff;
       --font-mono: 'Courier New', Courier, monospace;
-      --font-size: 14px;
+      --font-size: 15px;
     }
 
     [data-theme="inverted"] {
@@ -43,7 +43,7 @@
       --accent-red: #cc0000;
       --accent-green: #008800;
       --highlight-bg: #d9d9d9;
-      --version-color: #0033aa;
+      --version-color: #1a44cc;
     }
 
     [data-theme="green"] {
@@ -56,12 +56,12 @@
       --text-dim: #27ae60;
       --text-muted: #145a2d;
       --text-bright: #58d68d;
-      --brand-text: #000000;
+      --brand-text: #2ecc71;
       --accent-gold: #f1c40f;
       --accent-red: #e74c3c;
       --accent-green: #2ecc71;
       --highlight-bg: #0d381b;
-      --version-color: #002288;
+      --version-color: #3377ff;
     }
 
     [data-theme="green-inverted"] {
@@ -70,16 +70,16 @@
       --bg-card-hover: #229954;
       --border-color: #196f3d;
       --border-accent: #145a2d;
-      --text-main: #00220a;
-      --text-dim: #053312;
-      --text-muted: #0b4519;
+      --text-main: #020804;
+      --text-dim: #0b2612;
+      --text-muted: #145a2d;
       --text-bright: #000000;
-      --brand-text: #000000;
-      --accent-gold: #fff066;
-      --accent-red: #8b0000;
-      --accent-green: #003300;
+      --brand-text: #020804;
+      --accent-gold: #f1c40f;
+      --accent-red: #c0392b;
+      --accent-green: #020804;
       --highlight-bg: #229954;
-      --version-color: #001166;
+      --version-color: #1a44cc;
     }
 
     [data-theme="amber"] {
@@ -92,12 +92,12 @@
       --text-dim: #d35400;
       --text-muted: #7e5109;
       --text-bright: #f5b041;
-      --brand-text: #000000;
+      --brand-text: #f39c12;
       --accent-gold: #f4d03f;
       --accent-red: #c0392b;
       --accent-green: #27ae60;
       --highlight-bg: #332205;
-      --version-color: #0033aa;
+      --version-color: #3377ff;
     }
 
     [data-theme="blue"] {
@@ -110,12 +110,12 @@
       --text-dim: #2980b9;
       --text-muted: #154360;
       --text-bright: #5dade2;
-      --brand-text: #000000;
+      --brand-text: #3498db;
       --accent-gold: #f39c12;
       --accent-red: #e74c3c;
       --accent-green: #2ecc71;
       --highlight-bg: #103152;
-      --version-color: #002277;
+      --version-color: #6699ff;
     }
 
     [data-theme="red"] {
@@ -128,12 +128,12 @@
       --text-dim: #c0392b;
       --text-muted: #641e16;
       --text-bright: #f1948a;
-      --brand-text: #000000;
+      --brand-text: #e74c3c;
       --accent-gold: #f1c40f;
       --accent-red: #e74c3c;
       --accent-green: #2ecc71;
       --highlight-bg: #4a1010;
-      --version-color: #0033aa;
+      --version-color: #3377ff;
     }
 
     [data-theme="orange"] {
@@ -146,12 +146,12 @@
       --text-dim: #d35400;
       --text-muted: #784212;
       --text-bright: #f8c471;
-      --brand-text: #000000;
+      --brand-text: #e67e22;
       --accent-gold: #f1c40f;
       --accent-red: #e74c3c;
       --accent-green: #2ecc71;
       --highlight-bg: #4a2810;
-      --version-color: #0033aa;
+      --version-color: #3377ff;
     }
 
     [data-theme="mauve"] {
@@ -164,116 +164,101 @@
       --text-dim: #a482b2;
       --text-muted: #594463;
       --text-bright: #ebd4ff;
-      --brand-text: #000000;
+      --brand-text: #d4b5df;
       --accent-gold: #f1c40f;
       --accent-red: #e74c3c;
       --accent-green: #2ecc71;
       --highlight-bg: #322537;
-      --version-color: #0033aa;
+      --version-color: #3377ff;
     }
 
     [data-theme="blacked-out"] {
       --bg-main: #000000;
       --bg-card: #000000;
-      --bg-card-hover: #0f0f0f;
-      --border-color: #222222;
-      --border-accent: #444444;
-      --text-main: #cccccc;
-      --text-dim: #888888;
-      --text-muted: #444444;
-      --text-bright: #ffffff;
-      --brand-text: #000000;
-      --accent-gold: #ffcc00;
-      --accent-red: #ff4444;
-      --accent-green: #44ff44;
-      --highlight-bg: #151515;
-      --version-color: #0044cc;
+      --bg-card-hover: #0a0a0a;
+      --border-color: #1a1a1a;
+      --border-accent: #333333;
+      --text-main: #888888;
+      --text-dim: #555555;
+      --text-muted: #222222;
+      --text-bright: #cccccc;
+      --brand-text: #888888;
+      --accent-gold: #ccaa00;
+      --accent-red: #aa3333;
+      --accent-green: #33aa33;
+      --highlight-bg: #0f0f0f;
+      --version-color: #3366ff;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      word-break: break-word;
-      overflow-wrap: break-word;
     }
 
-    html, body {
-      width: 100%;
-      max-width: 100vw;
-      overflow-x: hidden;
+    body {
       background-color: var(--bg-main);
       color: var(--text-main);
       font-family: var(--font-mono);
       font-size: var(--font-size);
-      line-height: 1.4;
-      padding: 6px;
+      line-height: 1.5;
+      padding: 12px;
+      max-width: 900px;
       margin: 0 auto;
+      transition: background-color 0.2s, color 0.2s;
     }
 
     header {
       display: flex;
-      flex-direction: column;
-      gap: 6px;
-      padding-bottom: 6px;
-      margin-bottom: 10px;
-      border-bottom: 2px dashed var(--border-accent);
-      width: 100%;
-    }
-
-    .header-top {
-      display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 100%;
-      gap: 4px;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      border-bottom: 2px dashed var(--border-accent);
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .brand-title {
-      font-size: 0.9rem;
+      font-size: 1.1rem;
       font-weight: bold;
-      letter-spacing: 0.5px;
+      letter-spacing: 2px;
       color: var(--brand-text);
-      background-color: var(--text-bright);
-      padding: 2px 6px;
-      border-radius: 3px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      background: none;
+      padding: 0;
     }
 
     .version-badge {
       font-size: 0.75rem;
       color: var(--version-color);
       font-weight: bold;
-      margin-left: 3px;
-      background-color: var(--text-bright);
-      padding: 2px 4px;
-      border-radius: 3px;
+      margin-left: 0;
+      background: none;
+      padding: 0;
     }
 
     .clock-display {
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       color: var(--text-dim);
-      width: 100%;
+      text-align: right;
     }
 
     .header-actions {
       display: flex;
-      gap: 3px;
-      flex-shrink: 0;
+      gap: 6px;
+      flex-wrap: wrap;
     }
 
     .btn-header {
       background: var(--bg-card);
       color: var(--text-main);
       border: 1px solid var(--border-color);
-      padding: 3px 5px;
+      padding: 6px 10px;
       border-radius: 4px;
       font-family: var(--font-mono);
-      font-size: 0.6rem;
+      font-size: 0.75rem;
       cursor: pointer;
-      white-space: nowrap;
+      transition: all 0.2s;
     }
 
     .btn-header:hover {
@@ -285,41 +270,31 @@
       background-color: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 6px;
-      padding: 8px;
-      margin-bottom: 8px;
-      width: 100%;
-      max-width: 100%;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-      overflow: hidden;
+      padding: 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
 
     .section-title {
-      font-size: 0.7rem;
+      font-size: 0.8rem;
       color: var(--text-dim);
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
       font-weight: bold;
     }
 
     .indices-row {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
-      margin-bottom: 8px;
-      width: 100%;
-    }
-
-    @media (min-width: 600px) {
-      .indices-row {
-        grid-template-columns: repeat(4, 1fr);
-      }
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
     }
 
     .index-box {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      padding: 6px;
+      padding: 10px;
       border-radius: 4px;
       text-align: center;
       cursor: pointer;
@@ -329,31 +304,31 @@
     .index-box:hover {
       border-color: var(--text-main);
       background: var(--bg-card-hover);
+      transform: translateY(-2px);
     }
 
     .index-name {
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       color: var(--text-dim);
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
     }
 
     .index-val {
-      font-size: 0.85rem;
+      font-size: 1rem;
       font-weight: bold;
       color: var(--text-bright);
-      margin: 2px 0;
+      margin: 4px 0;
     }
 
     .index-change {
-      font-size: 0.7rem;
+      font-size: 0.8rem;
       font-weight: bold;
     }
 
     .search-row {
       display: flex;
-      gap: 6px;
-      margin-bottom: 6px;
-      width: 100%;
+      gap: 8px;
+      margin-bottom: 10px;
     }
 
     .search-input {
@@ -361,12 +336,11 @@
       background: var(--bg-main);
       border: 1px solid var(--border-color);
       color: var(--text-bright);
-      padding: 6px 8px;
+      padding: 10px 12px;
       border-radius: 4px;
       font-family: var(--font-mono);
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       outline: none;
-      min-width: 0;
     }
 
     .search-input:focus {
@@ -377,14 +351,13 @@
       background: var(--highlight-bg);
       color: var(--text-bright);
       border: 1px solid var(--border-accent);
-      padding: 0 10px;
+      padding: 0 16px;
       border-radius: 4px;
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       font-weight: bold;
       cursor: pointer;
-      letter-spacing: 0.5px;
-      flex-shrink: 0;
+      letter-spacing: 1px;
     }
 
     .btn-action:hover {
@@ -395,17 +368,17 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
       flex-wrap: wrap;
-      gap: 4px;
+      gap: 8px;
     }
 
     .cycle-selector {
       display: flex;
-      gap: 2px;
+      gap: 3px;
       background: var(--bg-main);
       border: 1px solid var(--border-color);
-      padding: 2px;
+      padding: 3px;
       border-radius: 4px;
     }
 
@@ -413,9 +386,9 @@
       background: transparent;
       color: var(--text-dim);
       border: none;
-      padding: 2px 6px;
+      padding: 4px 8px;
       font-family: var(--font-mono);
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       font-weight: bold;
       cursor: pointer;
       border-radius: 2px;
@@ -429,27 +402,14 @@
 
     .heatmap-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
-      width: 100%;
-      margin-bottom: 8px;
-    }
-
-    @media (min-width: 450px) {
-      .heatmap-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (min-width: 650px) {
-      .heatmap-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
     }
 
     .heat-card {
       border: 1px solid var(--border-color);
-      padding: 6px;
+      padding: 10px;
       border-radius: 4px;
       cursor: pointer;
       text-align: left;
@@ -457,39 +417,39 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 70px;
+      min-height: 85px;
     }
 
     .heat-card:hover {
       border-color: var(--text-main);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
     }
 
     .heat-ticker {
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       font-weight: bold;
       color: var(--text-bright);
     }
 
     .heat-cap {
-      font-size: 0.55rem;
+      font-size: 0.65rem;
       color: var(--text-dim);
     }
 
     .heat-price-stack {
-      margin-top: 4px;
+      margin-top: 6px;
       display: flex;
       flex-direction: column;
       gap: 1px;
     }
 
     .heat-price {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       color: var(--text-main);
     }
 
     .heat-pct {
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       font-weight: bold;
     }
 
@@ -497,88 +457,71 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.55rem;
+      font-size: 0.65rem;
       color: var(--text-dim);
       border-top: 1px solid var(--border-color);
-      padding-top: 6px;
-      gap: 4px;
+      padding-top: 8px;
+      gap: 8px;
     }
 
     .key-gradient {
       flex: 1;
-      height: 8px;
-      background: linear-gradient(to right, rgba(231, 76, 60, 0.8), rgba(46, 204, 113, 0.8));
+      height: 10px;
+      background: linear-gradient(to right, rgba(231, 76, 60, 0.85), rgba(46, 204, 113, 0.85));
       border-radius: 2px;
       border: 1px solid var(--border-color);
     }
 
     .profile-container {
       display: none;
-      width: 100%;
     }
 
     .profile-header {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: flex-start;
-      gap: 6px;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
       border-bottom: 1px solid var(--border-color);
-      padding-bottom: 8px;
-      width: 100%;
+      padding-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .profile-title {
-      font-size: 1rem;
+      font-size: 1.3rem;
       font-weight: bold;
       color: var(--text-bright);
-      width: 100%;
     }
 
     .profile-subtitle {
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       color: var(--text-dim);
-      letter-spacing: 0.8px;
-      width: 100%;
-    }
-
-    .profile-price-row {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      width: 100%;
+      letter-spacing: 1px;
     }
 
     .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(1, 1fr);
-      gap: 6px;
-      margin-bottom: 10px;
-      width: 100%;
-    }
-
-    @media (min-width: 450px) {
-      .metrics-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
     .metric-box {
       background: var(--bg-main);
       border: 1px solid var(--border-color);
-      padding: 6px 8px;
+      padding: 8px 12px;
       border-radius: 4px;
     }
 
     .metric-label {
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       color: var(--text-dim);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
     }
 
     .metric-value {
-      font-size: 0.8rem;
+      font-size: 0.95rem;
       font-weight: bold;
       color: var(--text-bright);
       margin-top: 2px;
@@ -586,26 +529,25 @@
 
     .returns-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
-      width: 100%;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 8px;
     }
 
     .return-card {
       background: var(--bg-main);
       border: 1px solid var(--border-color);
-      padding: 6px;
+      padding: 8px 10px;
       border-radius: 4px;
     }
 
     .return-label {
-      font-size: 0.55rem;
+      font-size: 0.65rem;
       color: var(--text-dim);
       text-transform: uppercase;
     }
 
     .return-val {
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       font-weight: bold;
       margin-top: 2px;
     }
@@ -618,26 +560,26 @@
       background-color: var(--bg-main);
       border: 1px dashed var(--border-accent);
       border-radius: 4px;
-      padding: 6px;
-      font-size: 0.6rem;
+      padding: 10px;
+      font-size: 0.7rem;
       color: var(--accent-green);
-      height: 70px;
+      height: 90px;
       overflow-y: auto;
-      margin-top: 10px;
+      margin-top: 16px;
       white-space: pre-wrap;
-      width: 100%;
+      word-break: break-all;
     }
 
     .back-btn {
       background: transparent;
       color: var(--text-dim);
       border: 1px solid var(--border-color);
-      padding: 3px 6px;
+      padding: 4px 10px;
       font-family: var(--font-mono);
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       cursor: pointer;
       border-radius: 4px;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
     }
 
     .back-btn:hover {
@@ -649,16 +591,16 @@
 <body>
 
   <header>
-    <div class="header-top">
-      <div class="brand-title">TRILLIONAIRE TERMINAL <span class="version-badge">| v4.1</span></div>
-      <div class="header-actions">
-        <button class="btn-header" id="font-dec-btn">A−</button>
-        <button class="btn-header" id="font-inc-btn">A+</button>
-        <button class="btn-header" id="theme-btn">THEME: MONO</button>
-      </div>
+    <div>
+      <div class="brand-title">TRILLIONAIRE TERMINAL <span class="version-badge">| v4.2</span></div>
     </div>
     <div class="clock-display" id="clock-display">
       UTC: 00:00:00 | LOC: 00:00:00
+    </div>
+    <div class="header-actions">
+      <button class="btn-header" id="font-dec-btn">A−</button>
+      <button class="btn-header" id="font-inc-btn">A+</button>
+      <button class="btn-header" id="theme-btn">THEME: MONO</button>
     </div>
   </header>
 
@@ -690,16 +632,16 @@
   <div class="terminal-card">
     <div class="section-title">GLOBAL ASSET SEARCH (STOCKS, FUTURES, RATES)</div>
     <div class="search-row">
-      <input type="text" class="search-input" id="search-input" placeholder="Enter ticker (e.g., AAPL, GC=F)...">
+      <input type="text" class="search-input" id="search-input" placeholder="Enter ticker (e.g., AAPL, GC=F, ^TNX, TSLA)...">
       <button class="btn-action" id="search-btn">EXECUTE</button>
     </div>
-    <div style="font-size:0.6rem; color:var(--text-dim);">
+    <div style="font-size:0.7rem; color:var(--text-dim);">
       QUICK JUMP: 
       <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('AAPL')">AAPL</span> | 
       <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('NVDA')">NVDA</span> | 
-      <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('GC=F')">GOLD</span> | 
-      <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('^TNX')">10Y</span> | 
-      <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('BTC-USD')">BTC</span>
+      <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('GC=F')">GOLD (GC=F)</span> | 
+      <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('^TNX')">10Y YIELD (^TNX)</span> | 
+      <span style="cursor:pointer; text-decoration:underline;" onclick="loadAsset('BTC-USD')">BITCOIN</span>
     </div>
   </div>
 
@@ -719,9 +661,9 @@
       <!-- Generated via dynamic cap sorting & cycle metrics JS -->
     </div>
     <div class="heatmap-key">
-      <span>DECREASE (BEARISH)</span>
+      <span>DECREASE INTENSITY (BEARISH)</span>
       <div class="key-gradient"></div>
-      <span>INCREASE (BULLISH)</span>
+      <span>INCREASE INTENSITY (BULLISH)</span>
     </div>
   </div>
 
@@ -730,11 +672,13 @@
     <button class="back-btn" id="back-btn">← BACK TO HEATMAP</button>
     
     <div class="profile-header">
-      <div class="profile-subtitle" id="prof-type">EQUITY TELEMETRY & ORDER BOOK</div>
-      <div class="profile-title" id="prof-title">AAPL - APPLE INC</div>
-      <div class="profile-price-row">
-        <div style="font-size:1.2rem; font-weight:bold; color:var(--text-bright);" id="prof-last">0.00</div>
-        <div style="font-size:0.75rem; font-weight:bold;" id="prof-change">0.00 (0.00%)</div>
+      <div>
+        <div class="profile-subtitle" id="prof-type">EQUITY TELEMETRY & ORDER BOOK</div>
+        <div class="profile-title" id="prof-title">AAPL - APPLE INC</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:1.5rem; font-weight:bold; color:var(--text-bright);" id="prof-last">0.00</div>
+        <div style="font-size:0.85rem;" id="prof-change">0.00 (0.00%)</div>
       </div>
     </div>
 
@@ -817,8 +761,8 @@
 
   <!-- Terminal Log Console -->
   <div class="console-box" id="console-log">
-[SYSTEM] Trillionaire Terminal v4.1 initialized.
-[SYSTEM] Multi-cycle heatmap intensity shading active.
+[SYSTEM] Trillionaire Terminal v4.2 initialized.
+[SYSTEM] Multi-cycle intensity heatmap & readable typography restored.
   </div>
 
   <script>
@@ -850,7 +794,7 @@
     ];
 
     let assetDataCache = {};
-    let currentFontSize = 14;
+    let currentFontSize = 15;
     let currentCycle = 'day';
 
     const themes = ['mono', 'inverted', 'green', 'green-inverted', 'amber', 'blue', 'red', 'orange', 'mauve', 'blacked-out'];
@@ -875,7 +819,7 @@
         localTz = 'LOCAL';
       }
       const locStr = now.toLocaleTimeString('en-GB', { hour12: false }) + ` (${localTz})`;
-      document.getElementById('clock-display').innerHTML = `UTC: ${utcStr} | LOC: ${locStr}`;
+      document.getElementById('clock-display').innerHTML = `UTC: ${utcStr}<br>LOC: ${locStr}`;
     }
     setInterval(updateClocks, 1000);
     updateClocks();
@@ -889,14 +833,14 @@
     });
 
     document.getElementById('font-inc-btn').addEventListener('click', () => {
-      if (currentFontSize < 17) {
+      if (currentFontSize < 22) {
         currentFontSize += 1;
         document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
       }
     });
 
     document.getElementById('font-dec-btn').addEventListener('click', () => {
-      if (currentFontSize > 12) {
+      if (currentFontSize > 11) {
         currentFontSize -= 1;
         document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
       }
@@ -977,15 +921,14 @@
 
     async function buildHeatmap() {
       const grid = document.getElementById('heatmap-grid');
-      grid.innerHTML = `<div style="font-size:0.7rem; color:var(--text-dim); padding:6px;">Computing ${currentCycle.toUpperCase()} heatmap intensities...</div>`;
+      grid.innerHTML = `<div style="font-size:0.75rem; color:var(--text-dim); padding:10px;">Computing ${currentCycle.toUpperCase()} heatmap intensities...</div>`;
 
       let evaluatedAssets = [];
 
       for (let item of EQUITY_POOL) {
-        let price = 100;
-        let dayPct = 0;
+        let price = 150 + (Math.abs(item.ticker.split('').reduce((acc,c)=>acc+c.charCodeAt(0),0)) % 250);
+        let dayPct = (Math.sin(item.ticker.length * 3 + Date.now() / 20000) * 2.2);
         let calculatedCapB = item.baseCapT ? item.baseCapT * 1000 : item.baseCapB;
-        let fetched = false;
 
         try {
           const url = `https://query1.finance.yahoo.com/v8/finance/chart/${item.ticker}?interval=1d&range=1d`;
@@ -1005,17 +948,11 @@
               const prev = meta.chartPreviousClose || meta.previousClose || price;
               dayPct = ((price - prev) / prev) * 100;
               calculatedCapB = calculatedCapB * (1 + (dayPct / 300));
-              fetched = true;
             }
           }
         } catch(e) {}
 
-        if (!fetched) {
-          price = 100 + (Math.abs(item.ticker.split('').reduce((acc,c)=>acc+c.charCodeAt(0),0)) % 300);
-          dayPct = (Math.sin(item.ticker.length * 3) * 1.5);
-        }
-
-        // Multi-cycle variance multipliers based on cycle selection
+        // Cycle multiplier variance
         let cyclePct = dayPct;
         const hashSeed = item.ticker.split('').reduce((acc,c)=>acc+c.charCodeAt(0),0);
         if (currentCycle === 'week') cyclePct = dayPct * 1.6 + ((hashSeed % 5) - 2);
@@ -1053,7 +990,7 @@
         const card = document.createElement('div');
         card.className = 'heat-card';
         
-        // Intensity Shading Calculation based on absolute cycle percentage magnitude
+        // Dynamic intensity shading calculation based on cycle absolute percentage magnitude
         const absVal = Math.min(Math.abs(item.cyclePct), 10);
         const alpha = Math.max(0.12, (absVal / 10) * 0.75).toFixed(2);
         
@@ -1160,28 +1097,28 @@
       document.getElementById('r-ytd').className = `return-val ${ytdPct >= 0 ? 'positive' : 'negative'}`;
     }
 
-    async function loadAsset(rawTicker) {
-      const ticker = rawTicker.toUpperCase().trim();
-      logToTerminal(`Fetching profile for ${ticker}...`);
+    async function loadAsset(ticker) {
+      ticker = ticker.toUpperCase().trim();
+      logToTerminal(`Fetching telemetry profile for ${ticker}...`);
 
       document.getElementById('heatmap-view').style.display = 'none';
       document.getElementById('profile-view').style.display = 'block';
 
-      let price = 125.00;
-      let prevClose = 123.00;
-      let pct = 1.62;
-      let volume = '28,400,100';
-      let openInterest = '95,400';
+      let price = 150.00;
+      let prevClose = 148.00;
+      let pct = 1.35;
+      let volume = '35,420,100';
+      let openInterest = '112,500';
       let volatility = '18.4% (MODERATE)';
-      let hi52 = '185.00';
-      let lo52 = '82.50';
+      let hi52 = '210.50';
+      let lo52 = '95.20';
       let earnings = 'NOV 15, 2026';
-      let capFormatted = '$450.0B';
-      let peRatio = '26.8';
-      let divYield = '1.20%';
-      let betaVal = '1.10';
-      let insiderHolder = 'Executive Management (3.5%)';
-      let instHolder = 'Vanguard Group (8.1%)';
+      let capFormatted = '$500.0B';
+      let peRatio = '28.4';
+      let divYield = '1.15%';
+      let betaVal = '1.12';
+      let insiderHolder = 'Executive Management (4.2%)';
+      let instHolder = 'Vanguard Group (7.5%)';
       let corpName = `${ticker} CORPORATION`;
 
       if (assetDataCache[ticker]) {
@@ -1214,7 +1151,7 @@
             price = meta.regularMarketPrice;
             prevClose = meta.chartPreviousClose || meta.previousClose || price;
             pct = ((price - prevClose) / prevClose) * 100;
-            volume = (meta.regularMarketVolume || 30000000).toLocaleString();
+            volume = (meta.regularMarketVolume || 35000000).toLocaleString();
             hi52 = (meta.fiftyTwoWeekHigh || price * 1.22).toFixed(2);
             lo52 = (meta.fiftyTwoWeekLow || price * 0.78).toFixed(2);
           }
