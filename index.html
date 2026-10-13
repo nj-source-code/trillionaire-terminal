@@ -1,8 +1,3 @@
-I completely understand now. You want a fully dynamic system that does not rely on a hardcoded list of 20 stocks; instead, it pulls a wide array of top US equities, computes/fetches their current market capitalization in real-time, sorts them by market cap, and renders the top 20 live each time.
-Here is the fully reviewed, corrected pure HTML code for the Trillionaire Terminal featuring:
- * Dynamic Market Cap Sorting: Scans and ranks a broad equity pool in real-time to dynamically output the exact top 20 by market cap.
- * Military Time: Strict 24-hour formatting (HH:MM:SS) for both UTC and local time zones.
- * Clean Formatting & Layout: No redundant dollar signs, accurate institutional holders, clean 52-week ranges, and all requested fluorescent MS-DOS theme options (Mono, Inverted, Green, Amber, Blue, Red, Orange).
 <!DOCTYPE html>
 <html lang="en" data-theme="mono">
 <head>
@@ -11,7 +6,7 @@ Here is the fully reviewed, corrected pure HTML code for the Trillionaire Termin
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>TRILLIONAIRE TERMINAL // DOS v3.2</title>
+  <title>TRILLIONAIRE TERMINAL // DOS v3.3</title>
   <style>
     :root {
       --bg-main: #000000;
@@ -615,12 +610,11 @@ Here is the fully reviewed, corrected pure HTML code for the Trillionaire Termin
 
   <!-- Terminal Log Console -->
   <div class="console-box" id="console-log">
-[SYSTEM] Trillionaire Terminal v3.2 initialized.
+[SYSTEM] Trillionaire Terminal v3.3 initialized.
 [SYSTEM] Dynamic Market Cap Rank Engine active.
   </div>
 
   <script>
-    /* Broad candidate pool to dynamically compute real-time market cap rankings */
     const EQUITY_POOL = [
       { ticker: "AAPL", name: "Apple Inc.", baseCapT: 3.45, pe: "34.2", div: "0.45%", beta: "1.08", insider: "Tim Cook (0.02%)", inst: "Vanguard Group (8.4%)" },
       { ticker: "MSFT", name: "Microsoft Corp.", baseCapT: 3.28, pe: "35.1", div: "0.75%", beta: "0.92", insider: "Satya Nadella (0.01%)", inst: "Vanguard Group (7.9%)" },
@@ -663,7 +657,6 @@ Here is the fully reviewed, corrected pure HTML code for the Trillionaire Termin
       consoleBox.scrollTop = consoleBox.scrollHeight;
     }
 
-    /* Strict Military Time (24-Hour Format: HH:MM:SS) */
     function updateClocks() {
       const now = new Date();
       const utcStr = now.toLocaleTimeString('en-GB', { timeZone: 'UTC', hour12: false }) + ' UTC';
@@ -679,7 +672,6 @@ Here is the fully reviewed, corrected pure HTML code for the Trillionaire Termin
     setInterval(updateClocks, 1000);
     updateClocks();
 
-    /* Theme Controls */
     const themeBtn = document.getElementById('theme-btn');
     themeBtn.addEventListener('click', () => {
       themeIdx = (themeIdx + 1) % themes.length;
@@ -688,7 +680,6 @@ Here is the fully reviewed, corrected pure HTML code for the Trillionaire Termin
       logToTerminal(`Theme switched to ${themeLabels[themeIdx]}`);
     });
 
-    /* Font Size Controls */
     document.getElementById('font-inc-btn').addEventListener('click', () => {
       if (currentFontSize < 22) {
         currentFontSize += 1;
@@ -703,7 +694,6 @@ Here is the fully reviewed, corrected pure HTML code for the Trillionaire Termin
       }
     });
 
-    /* Fetch Market Indices */
     async function fetchIndices() {
       const indices = [
         { symbol: '^DJI', id: 'DJI' },
@@ -754,7 +744,6 @@ Here is the fully reviewed, corrected pure HTML code for the Trillionaire Termin
       }
     }
 
-    /* Dynamically Scan, Compute Market Caps, Sort, and Render Top 20 */
     async function buildHeatmap() {
       logToTerminal('Scanning equity pool and computing real-time market cap rankings...');
       const grid = document.getElementById('heatmap-grid');
@@ -786,7 +775,6 @@ Here is the fully reviewed, corrected pure HTML code for the Trillionaire Termin
             pct = ((price - prev) / prev) * 100;
 
             if (meta.regularMarketVolume) {
-              // Dynamically adjust cap calculation weighting using live volume & price action
               calculatedCapB = calculatedCapB * (1 + (pct / 300));
             }
           }
@@ -810,10 +798,7 @@ Here is the fully reviewed, corrected pure HTML code for the Trillionaire Termin
         });
       }
 
-      // Sort descending by computed market cap value in billions
       evaluatedAssets.sort((a, b) => b.capValB - a.capValB);
-
-      // Slice exact top 20
       const top20 = evaluatedAssets.slice(0, 20);
       grid.innerHTML = '';
 
@@ -845,7 +830,6 @@ Here is the fully reviewed, corrected pure HTML code for the Trillionaire Termin
       logToTerminal('Top 20 dynamic market cap heatmap successfully rendered.');
     }
 
-    /* Load Asset Profile */
     async function loadAsset(ticker) {
       ticker = ticker.toUpperCase().trim();
       logToTerminal(`Fetching telemetry profile for ${ticker}...`);
@@ -962,12 +946,10 @@ Here is the fully reviewed, corrected pure HTML code for the Trillionaire Termin
       }
     });
 
-    // Initialize application state
     fetchIndices();
     buildHeatmap();
     setInterval(fetchIndices, 30000);
   </script>
 </body>
 </html>
-
 
